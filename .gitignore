@@ -1,1 +1,5 @@
 .idea
+out
+target
+src/main/webapp/META-INF
+*.iml
