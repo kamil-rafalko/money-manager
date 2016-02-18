@@ -1,6 +1,6 @@
 package com.corriel.users.service;
 
-import com.corriel.users.dao.UserDao;
+import com.corriel.users.repository.UserDao;
 import com.corriel.users.model.UserRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.security.core.userdetails.User;
 
+import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -20,11 +21,11 @@ import java.util.Set;
 @Service("userDetailsService")
 public class AppUserDetailsService implements UserDetailsService {
 
-    @Autowired
+    @Inject
     private UserDao userDao;
 
-    @Transactional(readOnly = true)
     @Override
+    @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
         com.corriel.users.model.User user = userDao.findByUserName(username);
@@ -40,15 +41,13 @@ public class AppUserDetailsService implements UserDetailsService {
 
     private List<GrantedAuthority> buildUserAuthority(Set<UserRole> userRoles) {
 
-        Set<GrantedAuthority> setAuths = new HashSet<GrantedAuthority>();
+        Set<GrantedAuthority> authorities = new HashSet<>();
 
         for(UserRole userRole : userRoles) {
-            setAuths.add(new SimpleGrantedAuthority(userRole.getRole()));
+            authorities.add(new SimpleGrantedAuthority(userRole.getRole()));
         }
 
-        ArrayList<GrantedAuthority> result = new ArrayList<GrantedAuthority>(setAuths);
-
-        return result;
+        return new ArrayList<>(authorities);
     }
 
 
