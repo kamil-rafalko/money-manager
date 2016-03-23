@@ -1,4 +1,4 @@
-package com.corriel.users.model;
+package com.corriel.users.entity;
 
 import javax.persistence.*;
 import java.util.HashSet;

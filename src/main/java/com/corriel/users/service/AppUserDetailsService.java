@@ -1,8 +1,7 @@
 package com.corriel.users.service;
 
 import com.corriel.users.repository.UserDao;
-import com.corriel.users.model.UserRole;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.corriel.users.entity.UserRole;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -28,14 +27,14 @@ public class AppUserDetailsService implements UserDetailsService {
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        com.corriel.users.model.User user = userDao.findByUserName(username);
+        com.corriel.users.entity.User user = userDao.findByUserName(username);
         List<GrantedAuthority> authorities = buildUserAuthority(user.getUserRoles());
 
         return buildUserForAuthentication(user, authorities);
 
     }
 
-    private User buildUserForAuthentication(com.corriel.users.model.User user, List<GrantedAuthority> authorities) {
+    private User buildUserForAuthentication(com.corriel.users.entity.User user, List<GrantedAuthority> authorities) {
         return new User(user.getUsername(), user.getPassword(), user.isEnabled(), true, true, true, authorities);
     }
 

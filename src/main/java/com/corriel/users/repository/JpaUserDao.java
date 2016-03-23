@@ -1,6 +1,6 @@
 package com.corriel.users.repository;
 
-import com.corriel.users.model.User;
+import com.corriel.users.entity.User;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
