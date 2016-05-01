@@ -1,16 +1,21 @@
 package com.corriel.users.entity;
 
+import com.corriel.budget.entity.Budget;
+import com.corriel.budget.entity.fund.Fund;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
-@Entity(name = "users")
+@Entity(name = "system_user")
 public class User {
 
     private String username;
     private String password;
     private boolean enabled;
+    private Set<Fund> funds;
     private Set<UserRole> userRoles = new HashSet<>();
+    private Set<Budget> budgets;
 
     public User() {}
 
@@ -53,6 +58,26 @@ public class User {
 
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
+    }
+
+    @ManyToMany
+    @JoinTable(name = "user_fund", joinColumns = @JoinColumn(name = "system_user"), inverseJoinColumns = @JoinColumn(name = "fund"))
+    public Set<Fund> getFunds() {
+        return funds;
+    }
+
+    public void setFunds(Set<Fund> funds) {
+        this.funds = funds;
+    }
+
+    @ManyToMany
+    @JoinTable(name = "user_budget", joinColumns = @JoinColumn(name = "system_user"))
+    public Set<Budget> getBudgets() {
+        return budgets;
+    }
+
+    public void setBudgets(Set<Budget> budgets) {
+        this.budgets = budgets;
     }
 
     @OneToMany(mappedBy = "user")

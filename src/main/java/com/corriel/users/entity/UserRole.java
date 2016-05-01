@@ -5,7 +5,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.*;
 
 @Entity
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"role", "username"}))
+@Table(name="user_role", uniqueConstraints = @UniqueConstraint(columnNames = {"role", "system_user"}))
 public class UserRole {
 
     private Integer userRoleId;
@@ -22,7 +22,7 @@ public class UserRole {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
-    @Column(unique = true, nullable = false)
+    @Column(name="id", unique = true, nullable = false)
     public Integer getUserRoleId() {
         return userRoleId;
     }
@@ -32,7 +32,7 @@ public class UserRole {
     }
 
     @ManyToOne
-    @JoinColumn(name = "username", nullable = false)
+    @JoinColumn(name = "system_user", nullable = false)
     public User getUser() {
         return user;
     }
@@ -41,7 +41,7 @@ public class UserRole {
         this.user = user;
     }
 
-    @Column(nullable = false, length = 45)
+    @Column(name = "role", nullable = false, length = 45)
     public String getRole() {
         return role;
     }
