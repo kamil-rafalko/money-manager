@@ -10,21 +10,20 @@ import java.util.Set;
 
 @Getter
 @Setter
-@Entity(name = "PartBudget")
+@Entity(name = "part_budget")
 public class PartBudget {
 
     @Id
-    @Column(name = "Id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = "Name", nullable = false, length = 120)
+    @Column(nullable = false, length = 120)
     private String name;
 
-    @Column(name = "StartDate")
+    @Column(name = "start_date")
     private Instant startDate;
 
-    @Column(name = "EndDate")
+    @Column(name = "end_date")
     private Instant endDate;
 
     @OneToMany
