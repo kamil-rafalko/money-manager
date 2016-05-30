@@ -2,22 +2,41 @@ package com.corriel.users.entity;
 
 import com.corriel.budget.entity.Budget;
 import com.corriel.budget.entity.fund.Fund;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity(name = "system_user")
+@Getter
+@Setter
+@NoArgsConstructor
 public class SystemUser {
 
+    @Id
+    @Column(unique = true, nullable = false, length = 45)
     private String username;
-    private String password;
-    private boolean enabled;
-    private Set<Fund> funds;
-    private Set<UserRole> userRoles = new HashSet<>();
-    private Set<Budget> budgets;
 
-    public SystemUser() {}
+    @Column(nullable = false, length = 60)
+    private String password;
+
+    @Column(nullable = false)
+    private boolean enabled;
+
+    @ManyToMany
+    @JoinTable(name = "user_fund", joinColumns = @JoinColumn(name = "system_user"), inverseJoinColumns = @JoinColumn(name = "fund"))
+    private Set<Fund> funds;
+
+    @OneToMany(mappedBy = "user")
+    private Set<UserRole> userRoles = new HashSet<>();
+
+    @ManyToMany
+    @JoinTable(name = "user_budget", joinColumns = @JoinColumn(name = "system_user"), inverseJoinColumns =
+    @JoinColumn(name = "budget"))
+    private Set<Budget> budgets;
 
     public SystemUser(String username, String password, boolean enabled ) {
         this.username = username;
@@ -29,64 +48,6 @@ public class SystemUser {
         this.username = username;
         this.password = password;
         this.enabled = enabled;
-        this.userRoles = userRoles;
-    }
-
-    @Id
-    @Column(unique = true, nullable = false, length = 45)
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    @Column(nullable = false, length = 60)
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    @Column(nullable = false)
-    public boolean isEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
-    }
-
-    @ManyToMany
-    @JoinTable(name = "user_fund", joinColumns = @JoinColumn(name = "system_user"), inverseJoinColumns = @JoinColumn(name = "fund"))
-    public Set<Fund> getFunds() {
-        return funds;
-    }
-
-    public void setFunds(Set<Fund> funds) {
-        this.funds = funds;
-    }
-
-    @ManyToMany
-    @JoinTable(name = "user_budget", joinColumns = @JoinColumn(name = "system_user"), inverseJoinColumns =
-    @JoinColumn(name = "budget"))
-    public Set<Budget> getBudgets() {
-        return budgets;
-    }
-
-    public void setBudgets(Set<Budget> budgets) {
-        this.budgets = budgets;
-    }
-
-    @OneToMany(mappedBy = "user")
-    public Set<UserRole> getUserRoles() {
-        return userRoles;
-    }
-
-    public void setUserRoles(Set<UserRole> userRoles) {
         this.userRoles = userRoles;
     }
 }

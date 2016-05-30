@@ -1,7 +1,5 @@
 package com.corriel.data.repository;
 
-import org.springframework.stereotype.Repository;
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
@@ -11,15 +9,12 @@ import javax.persistence.criteria.Root;
 import java.io.Serializable;
 import java.util.List;
 
-@Repository
 public class JpaGenericDao<T, PK extends Serializable> implements GenericDao<T, PK> {
 
     private Class<T> type;
 
     @PersistenceContext
     protected EntityManager entityManager;
-
-    public JpaGenericDao() {}
 
     public JpaGenericDao(Class<T> type) {
         this.type = type;

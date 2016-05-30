@@ -2,17 +2,13 @@ package com.corriel.web;
 
 import com.corriel.budget.entity.Budget;
 import com.corriel.budget.service.BudgetService;
-import com.corriel.users.entity.SystemUser;
 import com.corriel.users.service.UserService;
-import com.corriel.users.service.implementation.AppUserDetailsService;
 import org.junit.Test;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import static org.hamcrest.CoreMatchers.hasItems;
 import static org.mockito.Mockito.mock;
