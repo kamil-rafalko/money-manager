@@ -1,9 +1,12 @@
-package com.corriel.users.service;
+package com.corriel.users.service.implementation;
 
+import com.corriel.users.entity.SystemUser;
 import com.corriel.users.repository.UserDao;
 import com.corriel.users.entity.UserRole;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -27,14 +30,14 @@ public class AppUserDetailsService implements UserDetailsService {
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        com.corriel.users.entity.User user = userDao.findByUserName(username);
+        SystemUser user = userDao.find(username);
         List<GrantedAuthority> authorities = buildUserAuthority(user.getUserRoles());
 
         return buildUserForAuthentication(user, authorities);
 
     }
 
-    private User buildUserForAuthentication(com.corriel.users.entity.User user, List<GrantedAuthority> authorities) {
+    private User buildUserForAuthentication(SystemUser user, List<GrantedAuthority> authorities) {
         return new User(user.getUsername(), user.getPassword(), user.isEnabled(), true, true, true, authorities);
     }
 

@@ -1,7 +1,7 @@
 package com.corriel.budget.entity.transaction;
 
 import com.corriel.budget.entity.fund.Fund;
-import com.corriel.users.entity.User;
+import com.corriel.users.entity.SystemUser;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -12,7 +12,7 @@ public class MoneyTransaction {
     private long id;
     private BigDecimal amount;
     private Fund fund;
-    private User insertingUser;
+    private SystemUser insertingUser;
     private TransactionCategory transactionCategory;
 
     @Id
@@ -46,11 +46,11 @@ public class MoneyTransaction {
 
     @ManyToOne
     @JoinColumn(name = "inserting_user")
-    public User getInsertingUser() {
+    public SystemUser getInsertingUser() {
         return insertingUser;
     }
 
-    public void setInsertingUser(User insertingUser) {
+    public void setInsertingUser(SystemUser insertingUser) {
         this.insertingUser = insertingUser;
     }
 

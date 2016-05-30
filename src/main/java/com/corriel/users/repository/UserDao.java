@@ -1,8 +1,7 @@
 package com.corriel.users.repository;
 
-import com.corriel.users.entity.User;
+import com.corriel.data.repository.GenericDao;
+import com.corriel.users.entity.SystemUser;
 
-public interface UserDao {
-
-    User findByUserName(String username);
+public interface UserDao extends GenericDao<SystemUser, String> {
 }

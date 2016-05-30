@@ -9,13 +9,13 @@ import javax.persistence.*;
 public class UserRole {
 
     private Integer userRoleId;
-    private User user;
+    private SystemUser user;
     private String role;
 
     public UserRole() {
     }
 
-    public UserRole(User user, String role) {
+    public UserRole(SystemUser user, String role) {
         this.user = user;
         this.role = role;
     }
@@ -33,11 +33,11 @@ public class UserRole {
 
     @ManyToOne
     @JoinColumn(name = "system_user", nullable = false)
-    public User getUser() {
+    public SystemUser getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(SystemUser user) {
         this.user = user;
     }
 

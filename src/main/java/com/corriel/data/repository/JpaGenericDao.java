@@ -12,14 +12,16 @@ import java.io.Serializable;
 import java.util.List;
 
 @Repository
-public class GenericDaoImpl<T, PK extends Serializable> implements GenericDao<T, PK> {
+public class JpaGenericDao<T, PK extends Serializable> implements GenericDao<T, PK> {
 
     private Class<T> type;
 
     @PersistenceContext
-    private EntityManager entityManager;
+    protected EntityManager entityManager;
 
-    public GenericDaoImpl(Class<T> type) {
+    public JpaGenericDao() {}
+
+    public JpaGenericDao(Class<T> type) {
         this.type = type;
     }
 

@@ -8,7 +8,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity(name = "system_user")
-public class User {
+public class SystemUser {
 
     private String username;
     private String password;
@@ -17,15 +17,15 @@ public class User {
     private Set<UserRole> userRoles = new HashSet<>();
     private Set<Budget> budgets;
 
-    public User() {}
+    public SystemUser() {}
 
-    public User(String username, String password, boolean enabled ) {
+    public SystemUser(String username, String password, boolean enabled ) {
         this.username = username;
         this.password = password;
         this.enabled = enabled;
     }
 
-    public User(String username, String password, boolean enabled, Set<UserRole> userRoles) {
+    public SystemUser(String username, String password, boolean enabled, Set<UserRole> userRoles) {
         this.username = username;
         this.password = password;
         this.enabled = enabled;
@@ -71,7 +71,8 @@ public class User {
     }
 
     @ManyToMany
-    @JoinTable(name = "user_budget", joinColumns = @JoinColumn(name = "system_user"))
+    @JoinTable(name = "user_budget", joinColumns = @JoinColumn(name = "system_user"), inverseJoinColumns =
+    @JoinColumn(name = "budget"))
     public Set<Budget> getBudgets() {
         return budgets;
     }
