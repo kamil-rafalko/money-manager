@@ -1,36 +1,33 @@
 package com.corriel.web;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 
 
 @Controller
 public class MainController {
 
-    @RequestMapping(value = { "/" }, method = RequestMethod.GET)
-    public ModelAndView defaultPage() {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("title", "Money Manager Home Page");
-        modelAndView.setViewName("hello");
+    @RequestMapping(value = { "/", "/home" }, method = RequestMethod.GET)
+    public String defaultPage(Model model) {
+        model.addAttribute("title", "Money Manager Home Page");
 
-        return modelAndView;
+        return "home";
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public ModelAndView login(@RequestParam(value = "error", required = false) String error, @RequestParam(value = "logout", required = false) String logout) {
+    public String login(@RequestParam(value = "error", required = false) String error, @RequestParam(value = "logout",
+            required = false) String logout, Model model) {
 
-        ModelAndView modelAndView = new ModelAndView();
         if (error != null) {
-            modelAndView.addObject("error", "Invalid username and password!");
+            model.addAttribute("error", "Invalid username and password!");
         }
         if (logout != null) {
-            modelAndView.addObject("message", "You've been logged out successfully.");
+            model.addAttribute("message", "You've been logged out successfully.");
         }
-        modelAndView.setViewName("login");
 
-        return modelAndView;
+        return "login";
     }
 }
