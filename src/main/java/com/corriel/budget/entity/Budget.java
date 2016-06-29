@@ -2,6 +2,7 @@ package com.corriel.budget.entity;
 
 import com.corriel.budget.entity.fund.Fund;
 import com.corriel.users.entity.SystemUser;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,6 +12,7 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
+@EqualsAndHashCode
 public class Budget {
 
     @Id
@@ -21,7 +23,8 @@ public class Budget {
     private String name;
 
     @ManyToMany
-    @JoinTable(name = "budget_fund", joinColumns = @JoinColumn(name = "budget"), inverseJoinColumns = @JoinColumn(name = "fund"))
+    @JoinTable(name = "budget_fund", joinColumns = @JoinColumn(name = "budget"),
+            inverseJoinColumns = @JoinColumn(name = "fund"))
     private Set<Fund> funds;
 
     @ManyToMany(mappedBy = "budgets")

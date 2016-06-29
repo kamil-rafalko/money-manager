@@ -20,4 +20,9 @@ public class BudgetServiceImpl implements BudgetService {
     public List<Budget> findUsersBudgets(String username) {
         return budgetDao.findUsersBudgets(username);
     }
+
+    @Override
+    public Budget find(long id) {
+        return budgetDao.find(id);
+    }
 }

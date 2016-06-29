@@ -2,36 +2,27 @@ package com.corriel.web;
 
 import com.corriel.budget.entity.Budget;
 import com.corriel.budget.service.BudgetService;
-import com.corriel.users.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.CollectionUtils;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.inject.Inject;
-import java.util.List;
 
 @Controller
-@RequestMapping("/budgets")
+@RequestMapping("/budget")
 public class BudgetController {
-
-    @Inject
-    private UserService userService;
 
     @Inject
     private BudgetService budgetService;
 
-    @RequestMapping(method = RequestMethod.GET)
-    public String budgetInfo(Model model) {
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public String budgetInfo(@PathVariable long id, Model model) {
 
-        List<Budget> usersBudgets = budgetService.findUsersBudgets(userService.getCurrentUserName());
+        Budget budget = budgetService.find(id);
 
-        if (CollectionUtils.isEmpty(usersBudgets)) {
-            return "new_budget";
-        } else {
-            model.addAttribute(usersBudgets);
-            return "budget";
-        }
+        model.addAttribute(budget);
+        return "budget";
     }
 }

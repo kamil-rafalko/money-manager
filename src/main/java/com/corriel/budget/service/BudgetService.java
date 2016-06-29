@@ -7,4 +7,5 @@ import java.util.List;
 public interface BudgetService {
 
     List<Budget> findUsersBudgets(String username);
+    Budget find(long id);
 }
