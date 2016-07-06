@@ -30,6 +30,7 @@ public class Budget {
     @ManyToMany(mappedBy = "budgets")
     private Set<SystemUser> users;
 
-    @OneToMany
+    @OneToMany()
+    @JoinColumn(name = "id")
     private Set<PartBudget> partBudgets;
 }

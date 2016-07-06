@@ -2,14 +2,14 @@ package com.corriel.budget.entity.transaction;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.util.Set;
+import java.util.List;
 
 @Entity(name = "transaction_category")
 public class TransactionCategory {
 
     private long id;
     private String name;
-    private Set<MoneyTransaction> moneyTransactions;
+    private List<MoneyTransaction> moneyTransactions;
     private BigDecimal limit;
 
     @Id
@@ -32,11 +32,11 @@ public class TransactionCategory {
     }
 
     @OneToMany(mappedBy = "transactionCategory")
-    public Set<MoneyTransaction> getMoneyTransactions() {
+    public List<MoneyTransaction> getMoneyTransactions() {
         return moneyTransactions;
     }
 
-    public void setMoneyTransactions(Set<MoneyTransaction> moneyTransactions) {
+    public void setMoneyTransactions(List<MoneyTransaction> moneyTransactions) {
         this.moneyTransactions = moneyTransactions;
     }
 

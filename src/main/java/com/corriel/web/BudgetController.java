@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.inject.Inject;
+import java.math.BigDecimal;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/budget")
@@ -20,8 +22,10 @@ public class BudgetController {
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public String budgetInfo(@PathVariable long id, Model model) {
 
-        Budget budget = budgetService.find(id);
+        Budget budget = budgetService.findWithPartBudgets(id);
+        Map<String, BigDecimal> expensesForCategories = budgetService.mapExpensesToCategoriesNames(id);
 
+        model.addAttribute("expensesForCategories", expensesForCategories);
         model.addAttribute(budget);
         return "budget";
     }
