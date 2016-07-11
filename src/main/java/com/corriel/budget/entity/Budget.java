@@ -31,6 +31,6 @@ public class Budget {
     private Set<SystemUser> users;
 
     @OneToMany()
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "budget")
     private Set<PartBudget> partBudgets;
 }

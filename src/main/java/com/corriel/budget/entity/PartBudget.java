@@ -27,6 +27,6 @@ public class PartBudget {
     private LocalDateTime endDate;
 
     @OneToMany
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "part_budget")
     private Set<TransactionCategory> transactionCategories;
 }
