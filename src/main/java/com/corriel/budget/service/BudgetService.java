@@ -2,7 +2,6 @@ package com.corriel.budget.service;
 
 import com.corriel.budget.entity.Budget;
 import com.corriel.budget.entity.PartBudget;
-import com.corriel.budget.entity.transaction.MoneyTransaction;
 import com.corriel.budget.entity.transaction.TransactionCategory;
 import com.corriel.budget.repository.BudgetDao;
 import org.hibernate.Hibernate;
@@ -17,8 +16,15 @@ import java.util.*;
 @Transactional
 public class BudgetService {
 
+    final private BudgetDao budgetDao;
+    final private PartBudgetService partBudgetService;
+
     @Inject
-    private BudgetDao budgetDao;
+    public BudgetService(final BudgetDao budgetDao, PartBudgetService
+            partBudgetService) {
+        this.budgetDao = budgetDao;
+        this.partBudgetService = partBudgetService;
+    }
 
     public Budget find(long id) {
         return budgetDao.find(id);
@@ -30,27 +36,16 @@ public class BudgetService {
         return budget;
     }
 
-    public Map<String, BigDecimal> mapExpensesToCategoriesNames(long id) {
-        HashMap<String, BigDecimal> expensesForCategories = new HashMap<>();
+    public Map<TransactionCategory, BigDecimal> mapCategoryToSummaryExpense(long id) {
+        HashMap<TransactionCategory, BigDecimal> expensesForCategories = new HashMap<>();
         Budget budget = find(id);
         Set<PartBudget> partBudgets = budget.getPartBudgets();
-        getAllTransactionCategoriesFor(partBudgets).stream().forEach(
-                category -> expensesForCategories.put(category.getName(), getAmountOfExpensesFor(category)));
+
+        partBudgets.forEach(partBudget -> {
+            Map<TransactionCategory, BigDecimal> transactionCategoryBigDecimalMap = partBudgetService
+                    .mapCategoryToSummaryExpense(partBudget);
+            transactionCategoryBigDecimalMap.forEach((k, v) -> expensesForCategories.merge(k, v, BigDecimal::add));
+        });
         return expensesForCategories;
-    }
-
-    private List<TransactionCategory> getAllTransactionCategoriesFor(Set<PartBudget> partBudgets) {
-        List<TransactionCategory> transactionCategories = new ArrayList<>();
-        partBudgets.stream().forEach(partBudget -> transactionCategories.addAll(partBudget.getTransactionCategories()));
-        return transactionCategories;
-    }
-
-    private BigDecimal getAmountOfExpensesFor(TransactionCategory category) {
-        BigDecimal expenses = BigDecimal.ZERO;
-        List<MoneyTransaction> moneyTransactions = category.getMoneyTransactions();
-        for (MoneyTransaction transaction : moneyTransactions) {
-            expenses = expenses.add(transaction.getAmount());
-        }
-        return expenses;
     }
 }

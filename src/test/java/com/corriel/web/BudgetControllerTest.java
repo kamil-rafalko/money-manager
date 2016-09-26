@@ -31,7 +31,7 @@ public class BudgetControllerTest {
 
     private MockMvc prepareMockMvcController(Budget budget) {
         BudgetService budgetService = mock(BudgetService.class);
-        when(budgetService.find(TEST_BUDGET_ID)).thenReturn(budget);
+        when(budgetService.findWithPartBudgets(TEST_BUDGET_ID)).thenReturn(budget);
 
         BudgetController controller = new BudgetController();
         ReflectionTestUtils.setField(controller, "budgetService", budgetService);

@@ -1,10 +1,12 @@
 package com.corriel.budget.entity.transaction;
 
+import lombok.Builder;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.List;
 
 @Entity(name = "transaction_category")
+@Builder
 public class TransactionCategory {
 
     private long id;

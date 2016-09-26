@@ -1,6 +1,7 @@
 package com.corriel.web;
 
 import com.corriel.budget.entity.Budget;
+import com.corriel.budget.entity.transaction.TransactionCategory;
 import com.corriel.budget.service.BudgetService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,7 +24,7 @@ public class BudgetController {
     public String budgetInfo(@PathVariable long id, Model model) {
 
         Budget budget = budgetService.findWithPartBudgets(id);
-        Map<String, BigDecimal> expensesForCategories = budgetService.mapExpensesToCategoriesNames(id);
+        Map<TransactionCategory, BigDecimal> expensesForCategories = budgetService.mapCategoryToSummaryExpense(id);
 
         model.addAttribute("expensesForCategories", expensesForCategories);
         model.addAttribute(budget);

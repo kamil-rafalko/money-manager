@@ -19,7 +19,7 @@
         <p>Expenses for Categories</p>
         <ul>
             <c:forEach items="${expensesForCategories}" var="expenseForCategory">
-                <li>${expenseForCategory.key}: ${expenseForCategory.value}</li>
+                <li>${expenseForCategory.key.name}: ${expenseForCategory.value}</li>
             </c:forEach>
         </ul>
     </div>
