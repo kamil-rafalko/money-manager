@@ -1,12 +1,17 @@
 package com.corriel.budget.entity.transaction;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.List;
 
 @Entity(name = "transaction_category")
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class TransactionCategory {
 
     private long id;

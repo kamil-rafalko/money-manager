@@ -2,13 +2,17 @@ package com.corriel.budget.entity.transaction;
 
 import com.corriel.budget.entity.fund.Fund;
 import com.corriel.users.entity.SystemUser;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Entity(name = "money_transaction")
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class MoneyTransaction {
 
     private long id;
