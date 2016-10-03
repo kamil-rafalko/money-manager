@@ -25,5 +25,8 @@
             </h2>
         </c:if>
     </sec:authorize>
+    <c:if test="${pageContext.request.userPrincipal.name == null}">
+        <input type="button"  onclick="location.href='/login'" value="Sign in" >
+    </c:if>
 </body>
 </html>
