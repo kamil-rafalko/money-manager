@@ -24,6 +24,12 @@
                 User : ${pageContext.request.userPrincipal.name} | <a href="javascript:formSubmit()">Logout</a>
             </h2>
         </c:if>
+        <c:if test="${not empty budgets}">
+            <jsp:include page="budget_list.jsp">
+                <jsp:param name="budgets" value="${budgets}"/>
+            </jsp:include>
+        </c:if>
+
     </sec:authorize>
     <c:if test="${pageContext.request.userPrincipal.name == null}">
         <input type="button"  onclick="location.href='/login'" value="Sign in" >
