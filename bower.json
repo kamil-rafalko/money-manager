@@ -1,0 +1,7 @@
+{
+  "name": "money-manager",
+  "dependencies": {
+    "angular": "1.5.8",
+    "bootstrap-css-only": "3.3.7"
+  }
+}
