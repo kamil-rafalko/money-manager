@@ -14,9 +14,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service("userDetailsService")
 public class AppUserDetailsService implements UserDetailsService {
@@ -41,11 +41,9 @@ public class AppUserDetailsService implements UserDetailsService {
 
     private List<GrantedAuthority> buildUserAuthority(Set<UserRole> userRoles) {
 
-        Set<GrantedAuthority> authorities = new HashSet<>();
-
-        for(UserRole userRole : userRoles) {
-            authorities.add(new SimpleGrantedAuthority(userRole.getRole()));
-        }
+        Set<GrantedAuthority> authorities = userRoles.stream()
+                .map(userRole -> new SimpleGrantedAuthority(userRole.getRole()))
+                .collect(Collectors.toSet());
 
         return new ArrayList<>(authorities);
     }

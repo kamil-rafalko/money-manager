@@ -1,33 +1,42 @@
 package com.corriel.web;
 
-import com.corriel.budget.entity.Budget;
-import com.corriel.budget.entity.transaction.TransactionCategory;
+import com.corriel.budget.entity.PartBudget;
 import com.corriel.budget.service.BudgetService;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import com.corriel.budget.service.PartBudgetService;
+import com.corriel.web.dto.BudgetDetails;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.inject.Inject;
-import java.math.BigDecimal;
-import java.util.Map;
+import java.util.Set;
 
-@Controller
+@RestController
 @RequestMapping("/budget")
 public class BudgetController {
 
+    private final BudgetService budgetService;
+    private final PartBudgetService partBudgetService;
+
     @Inject
-    private BudgetService budgetService;
+    public BudgetController(final BudgetService budgetService, final PartBudgetService partBudgetService) {
+        this.budgetService = budgetService;
+        this.partBudgetService = partBudgetService;
+    }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public String budgetInfo(@PathVariable long id, Model model) {
+    @RequestMapping(value = "/details", method = RequestMethod.GET)
+    public BudgetDetails details() {
+        return budgetService.createDetails();
+    }
 
-        Budget budget = budgetService.findWithPartBudgets(id);
-        Map<TransactionCategory, BigDecimal> expensesForCategories = budgetService.mapCategoryToSummaryExpense(id);
+    @RequestMapping("/{id}/details")
+    public BudgetDetails details(@PathVariable final long id) {
+        return partBudgetService.createDetails(id);
+    }
 
-        model.addAttribute("expensesForCategories", expensesForCategories);
-        model.addAttribute(budget);
-        return "budget";
+    @RequestMapping(value = "/list", method = RequestMethod.GET)
+    public Set<PartBudget> partBudgetList() {
+        return partBudgetService.findAllForCurrentUser();
     }
 }

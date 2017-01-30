@@ -1,7 +1,6 @@
 package com.corriel.budget.entity;
 
 import com.corriel.budget.entity.fund.Fund;
-import com.corriel.users.entity.SystemUser;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -26,9 +25,6 @@ public class Budget {
     @JoinTable(name = "budget_fund", joinColumns = @JoinColumn(name = "budget"),
             inverseJoinColumns = @JoinColumn(name = "fund"))
     private Set<Fund> funds;
-
-    @ManyToMany(mappedBy = "budgets")
-    private Set<SystemUser> users;
 
     @OneToMany()
     @JoinColumn(name = "budget")

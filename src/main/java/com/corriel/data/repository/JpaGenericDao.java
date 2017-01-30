@@ -31,11 +31,6 @@ public class JpaGenericDao<T, PK extends Serializable> implements GenericDao<T, 
     }
 
     @Override
-    public void update(T entity) {
-        entityManager.merge(entity);
-    }
-
-    @Override
     public void remove(T entity) {
         entityManager.remove(entity);
     }

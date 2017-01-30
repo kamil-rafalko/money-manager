@@ -3,7 +3,6 @@ package com.corriel.users.entity;
 import com.corriel.budget.entity.Budget;
 import com.corriel.budget.entity.fund.Fund;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -13,7 +12,6 @@ import java.util.Set;
 @Entity(name = "system_user")
 @Getter
 @Setter
-@NoArgsConstructor
 public class SystemUser {
 
     @Id
@@ -33,21 +31,6 @@ public class SystemUser {
     @OneToMany(mappedBy = "user")
     private Set<UserRole> userRoles = new HashSet<>();
 
-    @ManyToMany
-    @JoinTable(name = "user_budget", joinColumns = @JoinColumn(name = "system_user"), inverseJoinColumns =
-    @JoinColumn(name = "budget"))
-    private Set<Budget> budgets;
-
-    public SystemUser(String username, String password, boolean enabled ) {
-        this.username = username;
-        this.password = password;
-        this.enabled = enabled;
-    }
-
-    public SystemUser(String username, String password, boolean enabled, Set<UserRole> userRoles) {
-        this.username = username;
-        this.password = password;
-        this.enabled = enabled;
-        this.userRoles = userRoles;
-    }
+    @OneToOne
+    private Budget budget;
 }

@@ -4,6 +4,7 @@ import com.corriel.budget.entity.Budget;
 import com.corriel.budget.entity.PartBudget;
 import com.corriel.budget.entity.transaction.TransactionCategory;
 import com.corriel.budget.repository.BudgetDao;
+import com.corriel.users.service.UserService;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -22,8 +23,8 @@ public class BudgetServiceTest {
     private TransactionCategory second_category;
     private TransactionCategory third_category;
 
-    private Map<TransactionCategory, BigDecimal> firstPartBudgetCategoryToExpense;
-    private Map<TransactionCategory, BigDecimal> secondPartBudgetCategoryToExpense;
+    private Map<String, BigDecimal> firstPartBudgetCategoryToExpense;
+    private Map<String, BigDecimal> secondPartBudgetCategoryToExpense;
 
     @Before
     public void prepareTransactionCategories() {
@@ -35,23 +36,26 @@ public class BudgetServiceTest {
     @Before
     public void fillDataForMock() {
         firstPartBudgetCategoryToExpense = new HashMap<>();
-        firstPartBudgetCategoryToExpense.put(first_category, new BigDecimal(123.45));
-        firstPartBudgetCategoryToExpense.put(second_category, new BigDecimal(223.45));
-        firstPartBudgetCategoryToExpense.put(third_category, new BigDecimal(323.45));
+        firstPartBudgetCategoryToExpense.put(first_category.getName(), new BigDecimal(123.45));
+        firstPartBudgetCategoryToExpense.put(second_category.getName(), new BigDecimal(223.45));
+        firstPartBudgetCategoryToExpense.put(third_category.getName(), new BigDecimal(323.45));
 
         secondPartBudgetCategoryToExpense = new HashMap<>();
-        secondPartBudgetCategoryToExpense.put(first_category, new BigDecimal(100));
-        secondPartBudgetCategoryToExpense.put(third_category, new BigDecimal(200));
+        secondPartBudgetCategoryToExpense.put(first_category.getName(), new BigDecimal(100));
+        secondPartBudgetCategoryToExpense.put(third_category.getName(), new BigDecimal(200));
     }
 
     @Test
     public void shouldMapCategoryToValidExpense() {
+        UserService userService = mock(UserService.class);
         PartBudgetService partBudgetService = mock(PartBudgetService.class);
         PartBudget firstPartBudget = new PartBudget();
-        when(partBudgetService.mapCategoryToSummaryExpense(firstPartBudget))
+        firstPartBudget.setId(1L);
+        when(partBudgetService.mapCategoryToExpenses(firstPartBudget))
                 .thenReturn(firstPartBudgetCategoryToExpense);
         PartBudget secondPartBudget = new PartBudget();
-        when(partBudgetService.mapCategoryToSummaryExpense(secondPartBudget))
+        secondPartBudget.setId(2L);
+        when(partBudgetService.mapCategoryToExpenses(secondPartBudget))
                 .thenReturn(secondPartBudgetCategoryToExpense);
 
         HashSet<PartBudget> partBudgets = new HashSet<>();
@@ -63,23 +67,23 @@ public class BudgetServiceTest {
         BudgetDao budgetDao = mock(BudgetDao.class);
         when(budgetDao.find(1L)).thenReturn(budget);
 
-        BudgetService budgetService = new BudgetService(budgetDao, partBudgetService);
-        Map<TransactionCategory, BigDecimal> categoryToSummaryExpense = budgetService
-                .mapCategoryToSummaryExpense(1L);
+        BudgetService budgetService = new BudgetService(budgetDao, userService, partBudgetService);
+        Map<String, BigDecimal> categoryToSummaryExpense = budgetService
+                .mapCategoryToExpenses(budget);
 
-        Map<TransactionCategory, BigDecimal> expectedMap = prepareExpectedMap();
+        Map<String, BigDecimal> expectedMap = prepareExpectedMap();
 
         assertEquals(expectedMap, categoryToSummaryExpense);
     }
 
-    private Map<TransactionCategory, BigDecimal> prepareExpectedMap() {
-        Map<TransactionCategory, BigDecimal> expectedMap = new HashMap<>();
+    private Map<String, BigDecimal> prepareExpectedMap() {
+        Map<String, BigDecimal> expectedMap = new HashMap<>();
 
-        expectedMap.put(first_category, firstPartBudgetCategoryToExpense.get(first_category)
-                .add(secondPartBudgetCategoryToExpense.get(first_category)));
-        expectedMap.put(second_category, firstPartBudgetCategoryToExpense.get(second_category));
-        expectedMap.put(third_category, firstPartBudgetCategoryToExpense.get(third_category)
-                .add(secondPartBudgetCategoryToExpense.get(third_category)));
+        expectedMap.put(first_category.getName(), firstPartBudgetCategoryToExpense.get(first_category.getName())
+                .add(secondPartBudgetCategoryToExpense.get(first_category.getName())));
+        expectedMap.put(second_category.getName(), firstPartBudgetCategoryToExpense.get(second_category.getName()));
+        expectedMap.put(third_category.getName(), firstPartBudgetCategoryToExpense.get(third_category.getName())
+                .add(secondPartBudgetCategoryToExpense.get(third_category.getName())));
 
         return expectedMap;
     }

@@ -1,0 +1,7 @@
+<div ng-show="$root.authenticated" class="menu-content">
+    <ul>
+        <li ng-repeat="budget in $ctrl.budgets">
+            <a href="#/budget/{{budget.id}}">{{budget.name}}</a>
+        </li>
+    </ul>
+</div>

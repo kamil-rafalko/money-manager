@@ -1,0 +1,6 @@
+<div ng-cloak class="container navigation">
+    <ul class="nav nav-pills" role="tablist">
+        <li class="active"><a href="#/">home</a></li>
+        <li ng-show="$root.authenticated"><a href="" ng-click="$ctrl.logout()">logout</a></li>
+    </ul>
+</div>

@@ -1,0 +1,13 @@
+<div class="menu">
+    <div class="menu-header">
+        <h3 class="menu-header" >Money Manager</h3>
+    </div>
+    <budget-list></budget-list>
+</div>
+<div class="content">
+    <h2>{{$ctrl.details.name}}</h2>
+
+    <ul>
+        <li ng-repeat="(key, value) in $ctrl.details.categoryToExpense">{{key}} : {{value}}</li>
+    </ul>
+</div>

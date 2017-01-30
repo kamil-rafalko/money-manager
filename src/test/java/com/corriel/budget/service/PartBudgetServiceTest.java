@@ -3,6 +3,8 @@ package com.corriel.budget.service;
 import com.corriel.budget.entity.PartBudget;
 import com.corriel.budget.entity.transaction.MoneyTransaction;
 import com.corriel.budget.entity.transaction.TransactionCategory;
+import com.corriel.budget.repository.PartBudgetDao;
+import com.corriel.users.service.UserService;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -10,6 +12,8 @@ import java.math.BigDecimal;
 import java.util.*;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class PartBudgetServiceTest {
 
@@ -37,16 +41,19 @@ public class PartBudgetServiceTest {
 
     @Test
     public void shouldMapCategoryToValidExpense() {
-        PartBudgetService partBudgetService = new PartBudgetService();
-        Map<TransactionCategory, BigDecimal> categoryToSummaryExpense = partBudgetService
-                .mapCategoryToSummaryExpense(partBudget);
+        UserService userService = mock(UserService.class);
+        PartBudgetDao partBudgetDao = mock(PartBudgetDao.class);
+        when(partBudgetDao.find(partBudget.getId())).thenReturn(partBudget);
+        PartBudgetService partBudgetService = new PartBudgetService(userService, partBudgetDao);
+        Map<String, BigDecimal> categoryToSummaryExpense = partBudgetService
+                .mapCategoryToExpenses(partBudget);
 
-        HashMap<TransactionCategory, BigDecimal> expectedMap = new HashMap<>();
-        expectedMap.put(first_category, firstMoneyTransactions.stream().map(MoneyTransaction::getAmount).reduce
+        HashMap<String, BigDecimal> expectedMap = new HashMap<>();
+        expectedMap.put(first_category.getName(), firstMoneyTransactions.stream().map(MoneyTransaction::getAmount).reduce
                 (BigDecimal.ZERO, BigDecimal::add));
-        expectedMap.put(second_category, secondMoneyTransactions.stream().map(MoneyTransaction::getAmount).reduce
+        expectedMap.put(second_category.getName(), secondMoneyTransactions.stream().map(MoneyTransaction::getAmount).reduce
                 (BigDecimal.ZERO, BigDecimal::add));
-        expectedMap.put(third_category, thirdMoneyTransactions.stream().map(MoneyTransaction::getAmount).reduce
+        expectedMap.put(third_category.getName(), thirdMoneyTransactions.stream().map(MoneyTransaction::getAmount).reduce
                 (BigDecimal.ZERO, BigDecimal::add));
 
         assertEquals(expectedMap, categoryToSummaryExpense);

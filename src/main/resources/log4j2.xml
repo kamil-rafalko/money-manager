@@ -1,14 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration>
+
+    <Properties>
+        <Property name="catalina.home">./</Property>
+    </Properties>
+
     <Appenders>
+        <File name="File" fileName="${sys:catalina.home}/logs/money-manager/appLog.log">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m%n%throwable"/>
+        </File>
         <Console name="Console" target="SYSTEM_OUT">
-            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %m%n%throwable"/>
         </Console>
     </Appenders>
     <Loggers>
-        <Root level="ERROR">
-            <AppenderRef ref="Console"/>
+        <Root level="INFO">
+            <appenderRef ref="File"/>
         </Root>
+        <Logger name="com.corriel" level="DEBUG" additivity="true">
+            <appender-ref ref="File" level="DEBUG" />
+        </Logger>
         <logger name="org.hibernate.SQL" level="DEBUG">
             <AppenderRef ref="Console"/>
         </logger>
