@@ -46,9 +46,9 @@ public class BudgetService {
         Set<MonthlyBudget> monthlyBudgets = budget.getMonthlyBudgets();
 
         monthlyBudgets.forEach(partBudget -> {
-            Map<String, BigDecimal> transactionCategoryBigDecimalMap = partBudgetService
+            Map<String, BigDecimal> categoryBigDecimalMap = partBudgetService
                     .mapCategoryToExpenses(partBudget);
-            transactionCategoryBigDecimalMap.forEach((k, v) -> expensesForCategories.merge(k, v, BigDecimal::add));
+            categoryBigDecimalMap.forEach((k, v) -> expensesForCategories.merge(k, v, BigDecimal::add));
         });
         return expensesForCategories;
     }

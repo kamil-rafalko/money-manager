@@ -1,8 +1,8 @@
 package com.corriel.budget.service;
 
 import com.corriel.budget.entity.Budget;
+import com.corriel.budget.entity.Category;
 import com.corriel.budget.entity.MonthlyBudget;
-import com.corriel.budget.entity.TransactionCategory;
 import com.corriel.budget.repository.BudgetDao;
 import com.corriel.users.service.UserService;
 import org.junit.Before;
@@ -19,18 +19,18 @@ import static org.mockito.Mockito.when;
 
 public class BudgetServiceTest {
 
-    private TransactionCategory first_category;
-    private TransactionCategory second_category;
-    private TransactionCategory third_category;
+    private Category first_category;
+    private Category second_category;
+    private Category third_category;
 
     private Map<String, BigDecimal> firstPartBudgetCategoryToExpense;
     private Map<String, BigDecimal> secondPartBudgetCategoryToExpense;
 
     @Before
     public void prepareTransactionCategories() {
-        first_category = TransactionCategory.builder().name("FIRST_CATEGORY").build();
-        second_category = TransactionCategory.builder().name("SECOND_CATEGORY").build();
-        third_category = TransactionCategory.builder().name("THIRD_CATEGORY").build();
+        first_category = Category.builder().name("FIRST_CATEGORY").build();
+        second_category = Category.builder().name("SECOND_CATEGORY").build();
+        third_category = Category.builder().name("THIRD_CATEGORY").build();
     }
 
     @Before

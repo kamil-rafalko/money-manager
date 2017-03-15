@@ -1,8 +1,8 @@
 package com.corriel.budget.service;
 
+import com.corriel.budget.entity.Category;
 import com.corriel.budget.entity.MonthlyBudget;
 import com.corriel.budget.entity.Transaction;
-import com.corriel.budget.entity.TransactionCategory;
 import com.corriel.budget.repository.PartBudgetDao;
 import com.corriel.users.service.UserService;
 import org.junit.Before;
@@ -21,9 +21,9 @@ public class MonthlyBudgetServiceTest {
     private static final String SECOND_CATEGORY = "SECOND_CATEGORY";
     private static final String THIRD_CATEGORY = "THIRD_CATEGORY";
     
-    private TransactionCategory first_category;
-    private TransactionCategory second_category;
-    private TransactionCategory third_category;
+    private Category first_category;
+    private Category second_category;
+    private Category third_category;
     
     private MonthlyBudget monthlyBudget;
 
@@ -34,9 +34,9 @@ public class MonthlyBudgetServiceTest {
     @Before
     public void setupPartBudget() {
         Map<String, List<Transaction>> moneyTransactionMap = setupMoneyTransactions();
-        Set<TransactionCategory> transactionCategories = setupCategories(moneyTransactionMap);
+        Set<Category> categories = setupCategories(moneyTransactionMap);
         monthlyBudget = new MonthlyBudget();
-        monthlyBudget.setTransactionCategories(transactionCategories);
+        monthlyBudget.setCategories(categories);
     }
 
     @Test
@@ -74,27 +74,27 @@ public class MonthlyBudgetServiceTest {
         return moneyTransactionsMap;
     }
 
-    private Set<TransactionCategory> setupCategories(Map<String, List<Transaction>> moneyTransactionsMap) {
-        first_category = TransactionCategory.builder()
+    private Set<Category> setupCategories(Map<String, List<Transaction>> moneyTransactionsMap) {
+        first_category = Category.builder()
                 .name(FIRST_CATEGORY)
                 .transactions(moneyTransactionsMap.get(FIRST_CATEGORY))
                 .build();
 
-        second_category = TransactionCategory.builder()
+        second_category = Category.builder()
                 .name(SECOND_CATEGORY)
                 .transactions(secondTransactions)
                 .build();
 
-        third_category = TransactionCategory.builder()
+        third_category = Category.builder()
                 .name(THIRD_CATEGORY)
                 .transactions(thirdTransactions)
                 .build();
         
-        Set<TransactionCategory> transactionCategories = new HashSet<>();
-        transactionCategories.add(first_category);
-        transactionCategories.add(second_category);
-        transactionCategories.add(third_category);
+        Set<Category> categories = new HashSet<>();
+        categories.add(first_category);
+        categories.add(second_category);
+        categories.add(third_category);
         
-        return transactionCategories;
+        return categories;
     }
 }

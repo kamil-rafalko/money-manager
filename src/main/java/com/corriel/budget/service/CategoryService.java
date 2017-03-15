@@ -1,6 +1,6 @@
 package com.corriel.budget.service;
 
-import com.corriel.budget.entity.TransactionCategory;
+import com.corriel.budget.entity.Category;
 import com.corriel.budget.repository.CategoryDao;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,8 +15,7 @@ public class CategoryService {
         this.categoryDao = categoryDao;
     }
 
-
-    public void create(TransactionCategory category) {
+    public void create(Category category) {
         categoryDao.create(category);
     }
 }

@@ -26,10 +26,10 @@ public class MonthlyBudget {
 
     @OneToMany
     @JoinColumn(name = "part_budget")
-    private Set<TransactionCategory> transactionCategories;
+    private Set<Category> categories;
 
     public MonthlyBudget(final YearMonth yearMonth) {
         this.yearMonth = yearMonth;
-        this.transactionCategories = new HashSet<>();
+        this.categories = new HashSet<>();
     }
 }

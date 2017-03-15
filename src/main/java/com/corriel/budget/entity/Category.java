@@ -12,7 +12,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class TransactionCategory {
+public class Category {
 
     private long id;
     private String name;
@@ -38,7 +38,7 @@ public class TransactionCategory {
         this.name = name;
     }
 
-    @OneToMany(mappedBy = "transactionCategory")
+    @OneToMany(mappedBy = "category")
     public List<Transaction> getTransactions() {
         return transactions;
     }

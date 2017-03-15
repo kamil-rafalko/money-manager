@@ -2,11 +2,9 @@ package com.corriel.budget.service;
 
 import com.corriel.budget.entity.MonthlyBudget;
 import com.corriel.budget.entity.Transaction;
-import com.corriel.budget.entity.TransactionCategory;
-import com.corriel.budget.repository.CategoryDao;
+import com.corriel.budget.entity.Category;
 import com.corriel.budget.repository.FundDao;
 import com.corriel.budget.repository.TransactionDao;
-import com.corriel.users.service.UserService;
 import com.corriel.web.dto.TransactionDto;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -42,18 +40,18 @@ public class TransactionService {
                 .orElse(partBudgetService.createBudgetFor(yearMonth));
 
         Transaction transaction = convertToEntity(dto);
-        TransactionCategory category = monthlyBudget.getTransactionCategories().stream()
+        Category category = monthlyBudget.getCategories().stream()
                 .filter(c -> c.getName().equals(dto.getCategoryName()))
                 .findAny()
                 .orElseGet(() -> createCategory(dto.getCategoryName()));
-        monthlyBudget.getTransactionCategories().add(category);
+        monthlyBudget.getCategories().add(category);
         category.getTransactions().add(transaction);
-        transaction.setTransactionCategory(category);
+        transaction.setCategory(category);
         transactionDao.create(transaction);
     }
 
-    private TransactionCategory createCategory(String name) {
-        TransactionCategory category = TransactionCategory.builder()
+    private Category createCategory(String name) {
+        Category category = Category.builder()
                 .name(name)
                 .transactions(new ArrayList<>())
                 .build();

@@ -1,9 +1,9 @@
 package com.corriel.budget.service;
 
 import com.corriel.budget.entity.Budget;
+import com.corriel.budget.entity.Category;
 import com.corriel.budget.entity.MonthlyBudget;
 import com.corriel.budget.entity.Transaction;
-import com.corriel.budget.entity.TransactionCategory;
 import com.corriel.budget.repository.PartBudgetDao;
 import com.corriel.users.entity.SystemUser;
 import com.corriel.users.service.UserService;
@@ -69,9 +69,9 @@ public class PartBudgetService {
     }
 
     Map<String, BigDecimal> mapCategoryToExpenses(MonthlyBudget monthlyBudget) {
-        Set<TransactionCategory> transactionCategories = monthlyBudget.getTransactionCategories();
+        Set<Category> categories = monthlyBudget.getCategories();
 
-        return transactionCategories.stream().collect(Collectors.toMap(TransactionCategory::getName,
+        return categories.stream().collect(Collectors.toMap(Category::getName,
                 category -> category.getTransactions().stream().map(Transaction::getAmount)
                         .reduce(BigDecimal.ZERO, BigDecimal::add)));
     }
