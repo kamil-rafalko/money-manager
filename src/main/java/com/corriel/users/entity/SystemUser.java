@@ -1,7 +1,7 @@
 package com.corriel.users.entity;
 
 import com.corriel.budget.entity.Budget;
-import com.corriel.budget.entity.fund.Fund;
+import com.corriel.budget.entity.Fund;
 import lombok.Getter;
 import lombok.Setter;
 

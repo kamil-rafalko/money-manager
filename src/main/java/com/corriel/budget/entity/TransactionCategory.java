@@ -1,4 +1,4 @@
-package com.corriel.budget.entity.transaction;
+package com.corriel.budget.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,7 +16,7 @@ public class TransactionCategory {
 
     private long id;
     private String name;
-    private List<MoneyTransaction> moneyTransactions;
+    private List<Transaction> transactions;
     private BigDecimal limit;
 
     @Id
@@ -39,12 +39,12 @@ public class TransactionCategory {
     }
 
     @OneToMany(mappedBy = "transactionCategory")
-    public List<MoneyTransaction> getMoneyTransactions() {
-        return moneyTransactions;
+    public List<Transaction> getTransactions() {
+        return transactions;
     }
 
-    public void setMoneyTransactions(List<MoneyTransaction> moneyTransactions) {
-        this.moneyTransactions = moneyTransactions;
+    public void setTransactions(List<Transaction> transactions) {
+        this.transactions = transactions;
     }
 
     @Column(name = "money_limit")

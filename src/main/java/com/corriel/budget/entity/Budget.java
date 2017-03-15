@@ -1,6 +1,5 @@
 package com.corriel.budget.entity;
 
-import com.corriel.budget.entity.fund.Fund;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -28,5 +27,5 @@ public class Budget {
 
     @OneToMany()
     @JoinColumn(name = "budget")
-    private Set<PartBudget> partBudgets;
+    private Set<MonthlyBudget> monthlyBudgets;
 }

@@ -1,6 +1,6 @@
 package com.corriel.web;
 
-import com.corriel.budget.entity.PartBudget;
+import com.corriel.budget.entity.MonthlyBudget;
 import com.corriel.budget.service.BudgetService;
 import com.corriel.budget.service.PartBudgetService;
 import com.corriel.web.dto.BudgetDetails;
@@ -36,7 +36,7 @@ public class BudgetController {
     }
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public Set<PartBudget> partBudgetList() {
+    public Set<MonthlyBudget> getMonthlyBudgets() {
         return partBudgetService.findAllForCurrentUser();
     }
 }

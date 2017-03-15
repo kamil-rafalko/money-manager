@@ -2,7 +2,9 @@ package com.corriel.config;
 
 import com.corriel.config.exceptions.CustomSimpleMappingExceptionResolver;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.hibernate5.Hibernate5Module;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -89,10 +91,11 @@ public class AppConfig extends WebMvcConfigurerAdapter {
 
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new Hibernate5Module());
+        mapper.registerModule(new JavaTimeModule());
+        mapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
 
         messageConverter.setObjectMapper(mapper);
         return messageConverter;
-
     }
 
     @Override

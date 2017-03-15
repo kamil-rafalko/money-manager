@@ -1,8 +1,8 @@
 package com.corriel.budget.service;
 
 import com.corriel.budget.entity.Budget;
-import com.corriel.budget.entity.PartBudget;
-import com.corriel.budget.entity.transaction.TransactionCategory;
+import com.corriel.budget.entity.MonthlyBudget;
+import com.corriel.budget.entity.TransactionCategory;
 import com.corriel.budget.repository.BudgetDao;
 import com.corriel.users.service.UserService;
 import org.junit.Before;
@@ -49,20 +49,20 @@ public class BudgetServiceTest {
     public void shouldMapCategoryToValidExpense() {
         UserService userService = mock(UserService.class);
         PartBudgetService partBudgetService = mock(PartBudgetService.class);
-        PartBudget firstPartBudget = new PartBudget();
-        firstPartBudget.setId(1L);
-        when(partBudgetService.mapCategoryToExpenses(firstPartBudget))
+        MonthlyBudget firstMonthlyBudget = new MonthlyBudget();
+        firstMonthlyBudget.setId(1L);
+        when(partBudgetService.mapCategoryToExpenses(firstMonthlyBudget))
                 .thenReturn(firstPartBudgetCategoryToExpense);
-        PartBudget secondPartBudget = new PartBudget();
-        secondPartBudget.setId(2L);
-        when(partBudgetService.mapCategoryToExpenses(secondPartBudget))
+        MonthlyBudget secondMonthlyBudget = new MonthlyBudget();
+        secondMonthlyBudget.setId(2L);
+        when(partBudgetService.mapCategoryToExpenses(secondMonthlyBudget))
                 .thenReturn(secondPartBudgetCategoryToExpense);
 
-        HashSet<PartBudget> partBudgets = new HashSet<>();
-        partBudgets.add(firstPartBudget);
-        partBudgets.add(secondPartBudget);
+        HashSet<MonthlyBudget> monthlyBudgets = new HashSet<>();
+        monthlyBudgets.add(firstMonthlyBudget);
+        monthlyBudgets.add(secondMonthlyBudget);
         Budget budget = new Budget();
-        budget.setPartBudgets(partBudgets);
+        budget.setMonthlyBudgets(monthlyBudgets);
 
         BudgetDao budgetDao = mock(BudgetDao.class);
         when(budgetDao.find(1L)).thenReturn(budget);

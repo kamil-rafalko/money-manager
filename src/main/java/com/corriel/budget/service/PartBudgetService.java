@@ -1,8 +1,9 @@
 package com.corriel.budget.service;
 
-import com.corriel.budget.entity.PartBudget;
-import com.corriel.budget.entity.transaction.MoneyTransaction;
-import com.corriel.budget.entity.transaction.TransactionCategory;
+import com.corriel.budget.entity.Budget;
+import com.corriel.budget.entity.MonthlyBudget;
+import com.corriel.budget.entity.Transaction;
+import com.corriel.budget.entity.TransactionCategory;
 import com.corriel.budget.repository.PartBudgetDao;
 import com.corriel.users.entity.SystemUser;
 import com.corriel.users.service.UserService;
@@ -13,7 +14,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
 import java.math.BigDecimal;
+import java.time.YearMonth;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -30,28 +33,46 @@ public class PartBudgetService {
         this.partBudgetDao = partBudgetDao;
     }
 
-    public PartBudget find(long id) {
+    public MonthlyBudget find(long id) {
         return partBudgetDao.find(id);
     }
 
-    public Set<PartBudget> findAllForCurrentUser() {
+    Optional<MonthlyBudget> findForCurrentUserBy(YearMonth yearMonth) {
+        SystemUser user = userService.getCurrentUser();
+        Budget budget = user.getBudget();
+        Set<MonthlyBudget> monthlyBudgets = budget.getMonthlyBudgets();
+        return monthlyBudgets.stream()
+                .filter(monthlyBudget -> monthlyBudget.getYearMonth().equals(yearMonth))
+                .findAny();
+    }
+
+    MonthlyBudget createBudgetFor(YearMonth yearMonth) {
+        SystemUser user = userService.getCurrentUser();
+        Budget budget = user.getBudget();
+        MonthlyBudget monthlyBudget = new MonthlyBudget(yearMonth);
+        partBudgetDao.create(monthlyBudget);
+        budget.getMonthlyBudgets().add(monthlyBudget);
+        return monthlyBudget;
+    }
+
+    public Set<MonthlyBudget> findAllForCurrentUser() {
         SystemUser currentUser = userService.getCurrentUser();
-        Set<PartBudget> partBudgets = currentUser.getBudget().getPartBudgets();
-        Hibernate.initialize(partBudgets);
-        return partBudgets;
+        Set<MonthlyBudget> monthlyBudgets = currentUser.getBudget().getMonthlyBudgets();
+        Hibernate.initialize(monthlyBudgets);
+        return monthlyBudgets;
     }
 
     public BudgetDetails createDetails(long id) {
-        PartBudget partBudget = find(id);
-        Map<String, BigDecimal> categoryToExpenses = mapCategoryToExpenses(partBudget);
-        return new BudgetDetails(partBudget.getName(), categoryToExpenses);
+        MonthlyBudget monthlyBudget = find(id);
+        Map<String, BigDecimal> categoryToExpenses = mapCategoryToExpenses(monthlyBudget);
+        return new BudgetDetails(monthlyBudget.getYearMonth().toString(), categoryToExpenses);
     }
 
-    Map<String, BigDecimal> mapCategoryToExpenses(PartBudget partBudget) {
-        Set<TransactionCategory> transactionCategories = partBudget.getTransactionCategories();
+    Map<String, BigDecimal> mapCategoryToExpenses(MonthlyBudget monthlyBudget) {
+        Set<TransactionCategory> transactionCategories = monthlyBudget.getTransactionCategories();
 
         return transactionCategories.stream().collect(Collectors.toMap(TransactionCategory::getName,
-                category -> category.getMoneyTransactions().stream().map(MoneyTransaction::getAmount)
+                category -> category.getTransactions().stream().map(Transaction::getAmount)
                         .reduce(BigDecimal.ZERO, BigDecimal::add)));
     }
 }

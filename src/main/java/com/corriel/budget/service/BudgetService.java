@@ -1,7 +1,7 @@
 package com.corriel.budget.service;
 
 import com.corriel.budget.entity.Budget;
-import com.corriel.budget.entity.PartBudget;
+import com.corriel.budget.entity.MonthlyBudget;
 import com.corriel.budget.repository.BudgetDao;
 import com.corriel.users.service.UserService;
 import com.corriel.web.dto.BudgetDetails;
@@ -43,9 +43,9 @@ public class BudgetService {
 
     Map<String, BigDecimal> mapCategoryToExpenses(Budget budget) {
         Map<String, BigDecimal> expensesForCategories = new HashMap<>();
-        Set<PartBudget> partBudgets = budget.getPartBudgets();
+        Set<MonthlyBudget> monthlyBudgets = budget.getMonthlyBudgets();
 
-        partBudgets.forEach(partBudget -> {
+        monthlyBudgets.forEach(partBudget -> {
             Map<String, BigDecimal> transactionCategoryBigDecimalMap = partBudgetService
                     .mapCategoryToExpenses(partBudget);
             transactionCategoryBigDecimalMap.forEach((k, v) -> expensesForCategories.merge(k, v, BigDecimal::add));
