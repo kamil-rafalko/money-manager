@@ -1,4 +1,4 @@
-package com.corriel.users.service.implementation;
+package com.corriel.users.service;
 
 import com.corriel.users.entity.SystemUser;
 import com.corriel.users.entity.UserRole;
@@ -21,8 +21,12 @@ import java.util.stream.Collectors;
 @Service("userDetailsService")
 public class AppUserDetailsService implements UserDetailsService {
 
+    private final UserDao userDao;
+
     @Inject
-    private UserDao userDao;
+    public AppUserDetailsService(final UserDao userDao) {
+        this.userDao = userDao;
+    }
 
     @Override
     @Transactional(readOnly = true)
@@ -32,7 +36,6 @@ public class AppUserDetailsService implements UserDetailsService {
         List<GrantedAuthority> authorities = buildUserAuthority(user.getUserRoles());
 
         return buildUserForAuthentication(user, authorities);
-
     }
 
     private User buildUserForAuthentication(SystemUser user, List<GrantedAuthority> authorities) {
@@ -47,6 +50,4 @@ public class AppUserDetailsService implements UserDetailsService {
 
         return new ArrayList<>(authorities);
     }
-
-
 }

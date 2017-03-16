@@ -2,6 +2,12 @@ package com.corriel.users.repository;
 
 import com.corriel.data.repository.GenericDao;
 import com.corriel.users.entity.SystemUser;
+import org.springframework.stereotype.Repository;
 
-public interface UserDao extends GenericDao<SystemUser, String> {
+@Repository
+public class UserDao extends GenericDao<SystemUser, String> {
+
+    public UserDao() {
+        super(SystemUser.class);
+    }
 }
