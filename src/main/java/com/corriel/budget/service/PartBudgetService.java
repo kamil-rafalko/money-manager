@@ -8,13 +8,14 @@ import com.corriel.budget.repository.PartBudgetDao;
 import com.corriel.users.entity.SystemUser;
 import com.corriel.users.service.UserService;
 import com.corriel.web.dto.BudgetDetails;
-import org.hibernate.Hibernate;
+import com.corriel.web.dto.BudgetDto;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
 import java.math.BigDecimal;
 import java.time.YearMonth;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
@@ -55,11 +56,13 @@ public class PartBudgetService {
         return monthlyBudget;
     }
 
-    public Set<MonthlyBudget> findAllForCurrentUser() {
+    public List<BudgetDto> findAllForCurrentUser() {
         SystemUser currentUser = userService.getCurrentUser();
         Set<MonthlyBudget> monthlyBudgets = currentUser.getBudget().getMonthlyBudgets();
-        Hibernate.initialize(monthlyBudgets);
-        return monthlyBudgets;
+
+        return monthlyBudgets.stream()
+                .map(monthlyBudget -> new BudgetDto(monthlyBudget.getId(), monthlyBudget.getYearMonth().toString()))
+                .collect(Collectors.toList());
     }
 
     public BudgetDetails createDetails(long id) {

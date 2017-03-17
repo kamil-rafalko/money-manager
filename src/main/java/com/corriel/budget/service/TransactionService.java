@@ -37,7 +37,7 @@ public class TransactionService {
 
         YearMonth yearMonth = YearMonth.from(dto.getDate());
         MonthlyBudget monthlyBudget = partBudgetService.findForCurrentUserBy(yearMonth)
-                .orElse(partBudgetService.createBudgetFor(yearMonth));
+                .orElseGet(() -> partBudgetService.createBudgetFor(yearMonth));
 
         Transaction transaction = convertToEntity(dto);
         Category category = monthlyBudget.getCategories().stream()

@@ -1,16 +1,16 @@
 package com.corriel.web;
 
-import com.corriel.budget.entity.MonthlyBudget;
 import com.corriel.budget.service.BudgetService;
 import com.corriel.budget.service.PartBudgetService;
 import com.corriel.web.dto.BudgetDetails;
+import com.corriel.web.dto.BudgetDto;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.inject.Inject;
-import java.util.Set;
+import java.util.List;
 
 @RestController
 @RequestMapping("/budget")
@@ -36,7 +36,7 @@ public class BudgetController {
     }
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public Set<MonthlyBudget> getMonthlyBudgets() {
+    public List<BudgetDto> getMonthlyBudgets() {
         return partBudgetService.findAllForCurrentUser();
     }
 }
