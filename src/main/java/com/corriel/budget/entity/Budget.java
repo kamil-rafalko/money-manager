@@ -3,6 +3,7 @@ package com.corriel.budget.entity;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.core.annotation.Order;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -27,5 +28,6 @@ public class Budget {
 
     @OneToMany()
     @JoinColumn(name = "budget")
+    @OrderBy("yearmonth DESC")
     private Set<MonthlyBudget> monthlyBudgets;
 }
