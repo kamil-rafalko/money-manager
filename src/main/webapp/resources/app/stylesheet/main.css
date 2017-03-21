@@ -1,46 +1,5 @@
-html {
-    min-height:100%;
-    position:relative;
-}
 body {
-    height:100%;
-}
-
-.menu {
-    overflow: auto;
-    font-family: verdana;
-    font-size: 12px;
-    font-weight: 200;
-    background-color: #0f7418;
-    position: fixed;
-    top: 0px;
-    width: 230px;
-    height: 100%;
-    color: #e1ffff;
-}
-
-div.menu-header {
-    color: white;
-    position: fixed;
-    height: 150px;
-    width: 230px;
-    border-bottom: 1px solid #b4b4b4;
-}
-
-h3.menu-header {
-    vertical-align: middle;
-    margin: 0;
-    line-height: 150px;
-    text-align: center;
-}
-
-.content {
-    margin-left: 230px
-}
-
-div.menu-content {
-    margin-top: 150px;
-    padding-top: 20px
+    padding-top: 50px;
 }
 
 .form-signin {
@@ -51,4 +10,47 @@ div.menu-content {
 
 .navigation {
     margin-left: 220px
+}
+
+.sidebar {
+    position: fixed;
+    top: 51px;
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+    display: block;
+    padding: 20px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    background-color: #f5f5f5;
+    border-right: 1px solid #eee;
+}
+
+.main {
+    padding: 20px;
+}
+@media (min-width: 768px) {
+    .main {
+        padding-right: 40px;
+        padding-left: 40px;
+    }
+}
+.main .page-header {
+    margin-top: 0;
+}
+
+.nav-sidebar {
+    margin-right: -21px; /* 20px padding + 1px border */
+    margin-bottom: 20px;
+    margin-left: -20px;
+}
+.nav-sidebar > li > a {
+    padding-right: 20px;
+    padding-left: 20px;
+}
+.nav-sidebar > .active > a,
+.nav-sidebar > .active > a:hover,
+.nav-sidebar > .active > a:focus {
+    color: #fff;
+    background-color: #428bca;
 }
