@@ -3,5 +3,6 @@ out
 target
 src/main/webapp/META-INF
 *.iml
-src/main/webapp/resources/app/bower_components
+src/main/webapp/resources/node_modules
 logs
+src/main/webapp/resources/yarn.lock

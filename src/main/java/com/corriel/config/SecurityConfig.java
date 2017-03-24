@@ -29,7 +29,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.httpBasic()
                 .and().authorizeRequests()
-                .antMatchers("/index.html", "/app/**", "/favicon.ico", "/").permitAll().anyRequest()
+                .antMatchers("/index.html", "/app/**", "/favicon.ico", "/", "/node_modules/**")
+                .permitAll()
+                .anyRequest()
                 .authenticated().and()
                 .csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
     }

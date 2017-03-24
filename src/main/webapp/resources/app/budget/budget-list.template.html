@@ -1,8 +1,8 @@
 <div ng-show="$root.authenticated" class="col-sm-3 col-md-2 sidebar">
     <ul class="nav nav-sidebar">
-        <li ng-class="{active: !$ctrl.currentId}"><a href="#/">Overview</a></li>
+        <li ng-class="{active: !$ctrl.currentId}"><a href="#!/">Overview</a></li>
         <li class="" ng-class="{active: budget.id == $ctrl.currentId}" ng-repeat="budget in $ctrl.budgets">
-            <a href="#/budget/{{budget.id}}">{{budget.name}}</a>
+            <a href="#!/budget/{{budget.id}}">{{budget.name}}</a>
         </li>
     </ul>
 </div>
