@@ -5,7 +5,9 @@ angular.module('money-manager', [
     'budget',
     'authentication',
     'core.budget',
-    'navigation'
+    'core.transaction',
+    'navigation',
+    'transaction'
 ]);
 
 angular.module('money-manager')

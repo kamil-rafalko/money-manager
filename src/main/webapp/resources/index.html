@@ -3,6 +3,7 @@
 <head>
     <title>Money Manager</title>
     <link href="node_modules/bootstrap-css-only/css/bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" href="node_modules/angular-moment-picker/dist/angular-moment-picker.min.css"/>
     <style type="text/css">
         [ng\:cloak], [ng-cloak], .ng-cloak {
             display: none !important;
@@ -18,20 +19,26 @@
     <div class="row" ng-view></div>
 </div>
 
-<script src="node_modules/angular/angular.js" type="text/javascript"></script>
-<script src="node_modules/angular-route/angular-route.js"></script>
-<script src="node_modules/angular-resource/angular-resource.js"></script>
+<script type="text/javascript" src="node_modules/moment/moment.js"></script>
+<script type="text/javascript" src="node_modules/angular/angular.js"></script>
+<script type="text/javascript" src="node_modules/angular-route/angular-route.js"></script>
+<script type="text/javascript" src="node_modules/angular-resource/angular-resource.js"></script>
+<script type="text/javascript" src="node_modules/angular-moment-picker/dist/angular-moment-picker.min.js"></script>
 
-<script src="app/app.js" type="text/javascript"></script>
-<script src="app/budget/budget.module.js" type="text/javascript"></script>
-<script src="app/budget/budget.component.js" type="text/javascript"></script>
-<script src="app/budget/budget-list.component.js" type="text/javascript"></script>
-<script src="app/authentication/authentication.module.js" type="text/javascript"></script>
-<script src="app/authentication/authentication.component.js" type="text/javascript"></script>
-<script src="app/core/budget/budget.module.js"></script>
-<script src="app/core/budget/budget.service.js"></script>
-<script src="app/core/budget/budget-list.service.js"></script>
-<script src="app/navigation/navigation.module.js"></script>
-<script src="app/navigation/navigation.component.js"></script>
+<script type="text/javascript" src="app/app.js"></script>
+<script type="text/javascript" src="app/budget/budget.module.js"></script>
+<script type="text/javascript" src="app/budget/budget.component.js"></script>
+<script type="text/javascript" src="app/budget/budget-list.component.js"></script>
+<script type="text/javascript" src="app/authentication/authentication.module.js"></script>
+<script type="text/javascript" src="app/authentication/authentication.component.js"></script>
+<script type="text/javascript" src="app/core/budget/budget.module.js"></script>
+<script type="text/javascript" src="app/core/budget/budget.service.js"></script>
+<script type="text/javascript" src="app/core/budget/budget-list.service.js"></script>
+<script type="text/javascript" src="app/navigation/navigation.module.js"></script>
+<script type="text/javascript" src="app/core/transaction/transaction.module.js"></script>
+<script type="text/javascript" src="app/core/transaction/transaction.service.js"></script>
+<script type="text/javascript" src="app/navigation/navigation.component.js"></script>
+<script type="text/javascript" src="app/transaction/transaction.module.js"></script>
+<script type="text/javascript" src="app/transaction/transaction-insert.component.js"></script>
 </body>
 </html>
