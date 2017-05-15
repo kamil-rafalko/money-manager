@@ -20,11 +20,5 @@
         <Logger name="com.corriel" level="DEBUG" additivity="true">
             <appender-ref ref="File" level="DEBUG" />
         </Logger>
-        <logger name="org.hibernate.SQL" level="DEBUG">
-            <AppenderRef ref="Console"/>
-        </logger>
-        <logger name="org.hibernate.type" level="TRACE">
-            <AppenderRef ref="Console"/>
-        </logger>
     </Loggers>
 </Configuration>
