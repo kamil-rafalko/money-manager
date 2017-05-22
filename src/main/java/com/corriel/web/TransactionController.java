@@ -1,18 +1,15 @@
 package com.corriel.web;
 
-import com.corriel.budget.service.TransactionService;
-import com.corriel.web.dto.TransactionDto;
+import com.corriel.application.core.budget.TransactionService;
+import com.corriel.application.dto.TransactionDto;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
 
 @RestController
 @RequestMapping("/transaction")
-public class TransactionController {
+class TransactionController {
 
     private final TransactionService transactionService;
 

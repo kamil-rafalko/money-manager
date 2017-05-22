@@ -1,8 +1,8 @@
 package com.corriel.web;
 
-import com.corriel.budget.service.BudgetService;
-import com.corriel.budget.service.PartBudgetService;
-import com.corriel.web.dto.BudgetDetails;
+import com.corriel.application.core.budget.BudgetService;
+import com.corriel.application.core.budget.PartBudgetService;
+import com.corriel.application.dto.BudgetDetails;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import org.junit.Test;

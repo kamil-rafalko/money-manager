@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.security.Principal;
 
 @Controller
-public class MainController {
+class MainController {
 
     @ResponseBody
     @RequestMapping("/user")

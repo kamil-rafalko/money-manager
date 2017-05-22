@@ -1,9 +1,9 @@
 package com.corriel.web;
 
-import com.corriel.budget.service.BudgetService;
-import com.corriel.budget.service.PartBudgetService;
-import com.corriel.web.dto.BudgetDetails;
-import com.corriel.web.dto.BudgetDto;
+import com.corriel.application.core.budget.BudgetService;
+import com.corriel.application.core.budget.PartBudgetService;
+import com.corriel.application.dto.BudgetDetails;
+import com.corriel.application.dto.BudgetDto;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -14,7 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/budget")
-public class BudgetController {
+class BudgetController {
 
     private final BudgetService budgetService;
     private final PartBudgetService partBudgetService;
