@@ -2,7 +2,7 @@ package com.corriel.application.core.budget;
 
 import com.corriel.application.core.annotations.ApplicationService;
 import com.corriel.application.core.entity.Budget;
-import com.corriel.application.core.entity.MonthlyBudget;
+import com.corriel.application.core.entity.MonthBudget;
 import com.corriel.application.core.users.UserService;
 import com.corriel.application.dto.BudgetDetails;
 
@@ -16,13 +16,13 @@ import java.util.Set;
 public class BudgetService {
 
     private final UserService userService;
-    private final PartBudgetService partBudgetService;
+    private final MonthBudgetService monthBudgetService;
 
     @Inject
     public BudgetService(final UserService userService,
-                         final PartBudgetService partBudgetService) {
+                         final MonthBudgetService monthBudgetService) {
         this.userService = userService;
-        this.partBudgetService = partBudgetService;
+        this.monthBudgetService = monthBudgetService;
     }
 
     public BudgetDetails createDetails() {
@@ -33,10 +33,10 @@ public class BudgetService {
 
     Map<String, BigDecimal> mapCategoryToExpenses(Budget budget) {
         Map<String, BigDecimal> expensesForCategories = new HashMap<>();
-        Set<MonthlyBudget> monthlyBudgets = budget.getMonthlyBudgets();
+        Set<MonthBudget> monthBudgets = budget.getMonthBudgets();
 
-        monthlyBudgets.forEach(partBudget -> {
-            Map<String, BigDecimal> categoryBigDecimalMap = partBudgetService
+        monthBudgets.forEach(partBudget -> {
+            Map<String, BigDecimal> categoryBigDecimalMap = monthBudgetService
                     .mapCategoryToExpenses(partBudget);
             categoryBigDecimalMap.forEach((k, v) -> expensesForCategories.merge(k, v, BigDecimal::add));
         });

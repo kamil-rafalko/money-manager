@@ -1,9 +1,9 @@
 package com.corriel.application.core.budget;
 
 import com.corriel.application.core.entity.Category;
-import com.corriel.application.core.entity.MonthlyBudget;
+import com.corriel.application.core.entity.MonthBudget;
 import com.corriel.application.core.entity.Transaction;
-import com.corriel.application.core.repository.PartBudgetRepository;
+import com.corriel.application.core.repository.MonthBudgetRepository;
 import com.corriel.application.core.users.UserService;
 import org.junit.Before;
 import org.junit.Test;
@@ -15,7 +15,7 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class MonthlyBudgetServiceTest {
+public class MonthBudgetServiceTest {
 
     private static final String FIRST_CATEGORY = "FIRST_CATEGORY";
     private static final String SECOND_CATEGORY = "SECOND_CATEGORY";
@@ -25,7 +25,7 @@ public class MonthlyBudgetServiceTest {
     private Category second_category;
     private Category third_category;
     
-    private MonthlyBudget monthlyBudget;
+    private MonthBudget monthBudget;
 
     private List<Transaction> firstTransactions = new ArrayList<>();
     private List<Transaction> secondTransactions = new ArrayList<>();
@@ -35,18 +35,18 @@ public class MonthlyBudgetServiceTest {
     public void setupPartBudget() {
         Map<String, List<Transaction>> moneyTransactionMap = setupMoneyTransactions();
         Set<Category> categories = setupCategories(moneyTransactionMap);
-        monthlyBudget = new MonthlyBudget();
-        monthlyBudget.setCategories(categories);
+        monthBudget = new MonthBudget();
+        monthBudget.setCategories(categories);
     }
 
     @Test
     public void shouldMapCategoryToValidExpense() {
         UserService userService = mock(UserService.class);
-        PartBudgetRepository partBudgetRepository = mock(PartBudgetRepository.class);
-        when(partBudgetRepository.find(monthlyBudget.getId())).thenReturn(monthlyBudget);
-        PartBudgetService partBudgetService = new PartBudgetService(userService, partBudgetRepository);
-        Map<String, BigDecimal> categoryToSummaryExpense = partBudgetService
-                .mapCategoryToExpenses(monthlyBudget);
+        MonthBudgetRepository monthBudgetRepository = mock(MonthBudgetRepository.class);
+        when(monthBudgetRepository.find(monthBudget.getId())).thenReturn(monthBudget);
+        MonthBudgetService monthBudgetService = new MonthBudgetService(userService, monthBudgetRepository);
+        Map<String, BigDecimal> categoryToSummaryExpense = monthBudgetService
+                .mapCategoryToExpenses(monthBudget);
 
         HashMap<String, BigDecimal> expectedMap = new HashMap<>();
         expectedMap.put(first_category.getName(), firstTransactions.stream().map(Transaction::getAmount).reduce

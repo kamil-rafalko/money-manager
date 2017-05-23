@@ -2,7 +2,7 @@ package com.corriel.application.core.budget;
 
 import com.corriel.application.core.entity.Budget;
 import com.corriel.application.core.entity.Category;
-import com.corriel.application.core.entity.MonthlyBudget;
+import com.corriel.application.core.entity.MonthBudget;
 import com.corriel.application.core.repository.BudgetRepository;
 import com.corriel.application.core.users.UserService;
 import org.junit.Before;
@@ -48,26 +48,26 @@ public class BudgetServiceTest {
     @Test
     public void shouldMapCategoryToValidExpense() {
         UserService userService = mock(UserService.class);
-        PartBudgetService partBudgetService = mock(PartBudgetService.class);
-        MonthlyBudget firstMonthlyBudget = new MonthlyBudget();
-        firstMonthlyBudget.setId(1L);
-        when(partBudgetService.mapCategoryToExpenses(firstMonthlyBudget))
+        MonthBudgetService monthBudgetService = mock(MonthBudgetService.class);
+        MonthBudget firstMonthBudget = new MonthBudget();
+        firstMonthBudget.setId(1L);
+        when(monthBudgetService.mapCategoryToExpenses(firstMonthBudget))
                 .thenReturn(firstPartBudgetCategoryToExpense);
-        MonthlyBudget secondMonthlyBudget = new MonthlyBudget();
-        secondMonthlyBudget.setId(2L);
-        when(partBudgetService.mapCategoryToExpenses(secondMonthlyBudget))
+        MonthBudget secondMonthBudget = new MonthBudget();
+        secondMonthBudget.setId(2L);
+        when(monthBudgetService.mapCategoryToExpenses(secondMonthBudget))
                 .thenReturn(secondPartBudgetCategoryToExpense);
 
-        HashSet<MonthlyBudget> monthlyBudgets = new HashSet<>();
-        monthlyBudgets.add(firstMonthlyBudget);
-        monthlyBudgets.add(secondMonthlyBudget);
+        HashSet<MonthBudget> monthBudgets = new HashSet<>();
+        monthBudgets.add(firstMonthBudget);
+        monthBudgets.add(secondMonthBudget);
         Budget budget = new Budget();
-        budget.setMonthlyBudgets(monthlyBudgets);
+        budget.setMonthBudgets(monthBudgets);
 
         BudgetRepository budgetRepository = mock(BudgetRepository.class);
         when(budgetRepository.find(1L)).thenReturn(budget);
 
-        BudgetService budgetService = new BudgetService(userService, partBudgetService);
+        BudgetService budgetService = new BudgetService(userService, monthBudgetService);
         Map<String, BigDecimal> categoryToSummaryExpense = budgetService
                 .mapCategoryToExpenses(budget);
 

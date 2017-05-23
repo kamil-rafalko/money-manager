@@ -13,7 +13,7 @@ import java.util.Set;
 @Setter
 @Entity
 @NoArgsConstructor
-public class MonthlyBudget {
+public class MonthBudget {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,7 +27,7 @@ public class MonthlyBudget {
     @JoinColumn(name = "part_budget")
     private Set<Category> categories;
 
-    public MonthlyBudget(final YearMonth yearMonth) {
+    public MonthBudget(final YearMonth yearMonth) {
         this.yearMonth = yearMonth;
         this.categories = new HashSet<>();
     }

@@ -1,7 +1,7 @@
 package com.corriel.web;
 
 import com.corriel.application.core.budget.BudgetService;
-import com.corriel.application.core.budget.PartBudgetService;
+import com.corriel.application.core.budget.MonthBudgetService;
 import com.corriel.application.dto.BudgetDetails;
 import com.corriel.application.dto.BudgetDto;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,12 +17,12 @@ import java.util.List;
 class BudgetController {
 
     private final BudgetService budgetService;
-    private final PartBudgetService partBudgetService;
+    private final MonthBudgetService monthBudgetService;
 
     @Inject
-    public BudgetController(final BudgetService budgetService, final PartBudgetService partBudgetService) {
+    public BudgetController(final BudgetService budgetService, final MonthBudgetService monthBudgetService) {
         this.budgetService = budgetService;
-        this.partBudgetService = partBudgetService;
+        this.monthBudgetService = monthBudgetService;
     }
 
     @RequestMapping(value = "/details", method = RequestMethod.GET)
@@ -32,11 +32,11 @@ class BudgetController {
 
     @RequestMapping("/{id}/details")
     public BudgetDetails details(@PathVariable final long id) {
-        return partBudgetService.createDetails(id);
+        return monthBudgetService.createDetails(id);
     }
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public List<BudgetDto> getMonthlyBudgets() {
-        return partBudgetService.findAllForCurrentUser();
+        return monthBudgetService.findAllForCurrentUser();
     }
 }

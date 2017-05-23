@@ -1,7 +1,7 @@
 package com.corriel.web;
 
 import com.corriel.application.core.budget.BudgetService;
-import com.corriel.application.core.budget.PartBudgetService;
+import com.corriel.application.core.budget.MonthBudgetService;
 import com.corriel.application.dto.BudgetDetails;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
@@ -46,10 +46,10 @@ public class BudgetControllerTest {
         BudgetService budgetService = mock(BudgetService.class);
         when(budgetService.createDetails()).thenReturn(details);
 
-        PartBudgetService partBudgetService = mock(PartBudgetService.class);
-        when(partBudgetService.createDetails(TEST_PART_BUDGET_ID)).thenReturn(details);
+        MonthBudgetService monthBudgetService = mock(MonthBudgetService.class);
+        when(monthBudgetService.createDetails(TEST_PART_BUDGET_ID)).thenReturn(details);
 
-        BudgetController controller = new BudgetController(budgetService, partBudgetService);
+        BudgetController controller = new BudgetController(budgetService, monthBudgetService);
         return standaloneSetup(controller).build();
     }
 

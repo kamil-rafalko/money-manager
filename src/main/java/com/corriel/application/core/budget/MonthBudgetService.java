@@ -1,12 +1,8 @@
 package com.corriel.application.core.budget;
 
 import com.corriel.application.core.annotations.ApplicationService;
-import com.corriel.application.core.entity.Budget;
-import com.corriel.application.core.entity.Category;
-import com.corriel.application.core.entity.MonthlyBudget;
-import com.corriel.application.core.entity.Transaction;
-import com.corriel.application.core.entity.SystemUser;
-import com.corriel.application.core.repository.PartBudgetRepository;
+import com.corriel.application.core.entity.*;
+import com.corriel.application.core.repository.MonthBudgetRepository;
 import com.corriel.application.core.users.UserService;
 import com.corriel.application.dto.BudgetDetails;
 import com.corriel.application.dto.BudgetDto;
@@ -21,52 +17,52 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @ApplicationService
-public class PartBudgetService {
+public class MonthBudgetService {
 
     private final UserService userService;
-    private final PartBudgetRepository repository;
+    private final MonthBudgetRepository repository;
 
     @Inject
-    public PartBudgetService(final UserService userService, final PartBudgetRepository repository) {
+    public MonthBudgetService(final UserService userService, final MonthBudgetRepository repository) {
         this.userService = userService;
         this.repository = repository;
     }
 
-    Optional<MonthlyBudget> findForCurrentUserBy(YearMonth yearMonth) {
+    Optional<MonthBudget> findForCurrentUserBy(YearMonth yearMonth) {
         SystemUser user = userService.getCurrentUser();
         Budget budget = user.getBudget();
-        Set<MonthlyBudget> monthlyBudgets = budget.getMonthlyBudgets();
-        return monthlyBudgets.stream()
+        Set<MonthBudget> monthBudgets = budget.getMonthBudgets();
+        return monthBudgets.stream()
                 .filter(monthlyBudget -> monthlyBudget.getYearMonth().equals(yearMonth))
                 .findAny();
     }
 
-    MonthlyBudget createBudgetFor(YearMonth yearMonth) {
+    MonthBudget createBudgetFor(YearMonth yearMonth) {
         SystemUser user = userService.getCurrentUser();
         Budget budget = user.getBudget();
-        MonthlyBudget monthlyBudget = new MonthlyBudget(yearMonth);
-        repository.create(monthlyBudget);
-        budget.getMonthlyBudgets().add(monthlyBudget);
-        return monthlyBudget;
+        MonthBudget monthBudget = new MonthBudget(yearMonth);
+        repository.create(monthBudget);
+        budget.getMonthBudgets().add(monthBudget);
+        return monthBudget;
     }
 
     public List<BudgetDto> findAllForCurrentUser() {
         SystemUser currentUser = userService.getCurrentUser();
-        Set<MonthlyBudget> monthlyBudgets = currentUser.getBudget().getMonthlyBudgets();
+        Set<MonthBudget> monthBudgets = currentUser.getBudget().getMonthBudgets();
 
-        return monthlyBudgets.stream()
+        return monthBudgets.stream()
                 .map(monthlyBudget -> new BudgetDto(monthlyBudget.getId(), monthlyBudget.getYearMonth().toString()))
                 .collect(Collectors.toList());
     }
 
     public BudgetDetails createDetails(long id) {
-        MonthlyBudget monthlyBudget = repository.find(id);
-        Map<String, BigDecimal> categoryToExpenses = mapCategoryToExpenses(monthlyBudget);
-        return new BudgetDetails(monthlyBudget.getYearMonth().toString(), categoryToExpenses);
+        MonthBudget monthBudget = repository.find(id);
+        Map<String, BigDecimal> categoryToExpenses = mapCategoryToExpenses(monthBudget);
+        return new BudgetDetails(monthBudget.getYearMonth().toString(), categoryToExpenses);
     }
 
-    Map<String, BigDecimal> mapCategoryToExpenses(MonthlyBudget monthlyBudget) {
-        Set<Category> categories = monthlyBudget.getCategories();
+    Map<String, BigDecimal> mapCategoryToExpenses(MonthBudget monthBudget) {
+        Set<Category> categories = monthBudget.getCategories();
 
         return categories.stream().collect(Collectors.toMap(Category::getName,
                 category -> category.getTransactions().stream().map(Transaction::getAmount)

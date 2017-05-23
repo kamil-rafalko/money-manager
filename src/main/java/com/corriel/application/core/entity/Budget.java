@@ -28,5 +28,5 @@ public class Budget {
     @OneToMany()
     @JoinColumn(name = "budget")
     @OrderBy("yearmonth DESC")
-    private Set<MonthlyBudget> monthlyBudgets;
+    private Set<MonthBudget> monthBudgets;
 }

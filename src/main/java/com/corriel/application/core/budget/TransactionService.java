@@ -1,7 +1,7 @@
 package com.corriel.application.core.budget;
 
 import com.corriel.application.core.annotations.ApplicationService;
-import com.corriel.application.core.entity.MonthlyBudget;
+import com.corriel.application.core.entity.MonthBudget;
 import com.corriel.application.core.entity.Transaction;
 import com.corriel.application.core.entity.Category;
 import com.corriel.application.core.repository.TransactionRepository;
@@ -15,29 +15,29 @@ import java.util.ArrayList;
 public class TransactionService {
 
     private final TransactionRepository repository;
-    private final PartBudgetService partBudgetService;
+    private final MonthBudgetService monthBudgetService;
     private final CategoryService categoryService;
 
     @Inject
     public TransactionService(final TransactionRepository repository,
-                              final PartBudgetService partBudgetService,
+                              final MonthBudgetService monthBudgetService,
                               final CategoryService categoryService) {
         this.repository = repository;
-        this.partBudgetService = partBudgetService;
+        this.monthBudgetService = monthBudgetService;
         this.categoryService = categoryService;
     }
 
     public void create(final TransactionDto dto) {
         YearMonth yearMonth = YearMonth.from(dto.getDate());
-        MonthlyBudget monthlyBudget = partBudgetService.findForCurrentUserBy(yearMonth)
-                .orElseGet(() -> partBudgetService.createBudgetFor(yearMonth));
+        MonthBudget monthBudget = monthBudgetService.findForCurrentUserBy(yearMonth)
+                .orElseGet(() -> monthBudgetService.createBudgetFor(yearMonth));
 
         Transaction transaction = convertToEntity(dto);
-        Category category = monthlyBudget.getCategories().stream()
+        Category category = monthBudget.getCategories().stream()
                 .filter(c -> c.getName().equals(dto.getCategoryName()))
                 .findAny()
                 .orElseGet(() -> createCategory(dto.getCategoryName()));
-        monthlyBudget.getCategories().add(category);
+        monthBudget.getCategories().add(category);
         category.getTransactions().add(transaction);
         transaction.setCategory(category);
         repository.create(transaction);
