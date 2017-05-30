@@ -24,7 +24,7 @@ public class MonthBudget {
     private YearMonth yearMonth;
 
     @OneToMany
-    @JoinColumn(name = "part_budget")
+    @JoinColumn(name = "month_budget")
     private Set<Category> categories;
 
     public MonthBudget(final YearMonth yearMonth) {
