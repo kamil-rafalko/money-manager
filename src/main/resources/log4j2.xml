@@ -18,7 +18,7 @@
             <appenderRef ref="File"/>
         </Root>
         <Logger name="com.corriel" level="DEBUG" additivity="true">
-            <appender-ref ref="File" level="DEBUG" />
+            <appender-ref ref="Console" level="DEBUG" />
         </Logger>
     </Loggers>
 </Configuration>

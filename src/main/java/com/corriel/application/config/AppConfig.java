@@ -1,6 +1,5 @@
 package com.corriel.application.config;
 
-import com.corriel.application.config.exceptions.CustomSimpleMappingExceptionResolver;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.hibernate5.Hibernate5Module;
@@ -23,12 +22,10 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
-import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import javax.sql.DataSource;
 import java.util.List;
-import java.util.Properties;
 
 @EnableWebMvc
 @Configuration
@@ -113,18 +110,6 @@ public class AppConfig extends WebMvcConfigurerAdapter {
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/").setViewName("/index.html");
-    }
-
-    @Bean
-    public SimpleMappingExceptionResolver createSimpleMappingExceptionResolver(){
-        SimpleMappingExceptionResolver resolver = new CustomSimpleMappingExceptionResolver();
-
-        Properties mappings = new Properties();
-        mappings.setProperty("Exception", "exception");
-
-        resolver.setExceptionMappings(mappings);
-        resolver.setDefaultErrorView("error");
-        return resolver;
     }
 }
 
