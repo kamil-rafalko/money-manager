@@ -31,6 +31,10 @@ public class BudgetService {
         return new BudgetDetails("Summary expenses", categoryToSummaryExpense);
     }
 
+    Budget getCurrentUserBudget() {
+        return userService.getCurrentUser().getBudget();
+    }
+
     Map<String, BigDecimal> mapCategoryToExpenses(Budget budget) {
         Map<String, BigDecimal> expensesForCategories = new HashMap<>();
         Set<MonthBudget> monthBudgets = budget.getMonthBudgets();

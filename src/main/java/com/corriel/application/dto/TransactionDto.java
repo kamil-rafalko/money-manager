@@ -12,5 +12,4 @@ public class TransactionDto {
     private final LocalDate date;
     private final BigDecimal amount;
     private final String categoryName;
-    private final long fundId;
 }
