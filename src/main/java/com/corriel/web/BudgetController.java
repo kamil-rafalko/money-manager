@@ -2,8 +2,10 @@ package com.corriel.web;
 
 import com.corriel.application.core.budget.BudgetService;
 import com.corriel.application.core.budget.MonthBudgetService;
+import com.corriel.application.core.budget.TransactionService;
 import com.corriel.application.dto.BudgetDetails;
 import com.corriel.application.dto.BudgetDto;
+import com.corriel.application.dto.TransactionDto;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,11 +20,15 @@ class BudgetController {
 
     private final BudgetService budgetService;
     private final MonthBudgetService monthBudgetService;
+    private final TransactionService transactionService;
 
     @Inject
-    public BudgetController(final BudgetService budgetService, final MonthBudgetService monthBudgetService) {
+    public BudgetController(final BudgetService budgetService,
+                            final MonthBudgetService monthBudgetService,
+                            final TransactionService transactionService) {
         this.budgetService = budgetService;
         this.monthBudgetService = monthBudgetService;
+        this.transactionService = transactionService;
     }
 
     @RequestMapping(value = "/details", method = RequestMethod.GET)
@@ -38,5 +44,10 @@ class BudgetController {
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public List<BudgetDto> getMonthlyBudgets() {
         return monthBudgetService.findAllForCurrentUser();
+    }
+
+    @RequestMapping(value = "/{id}/transactions", method = RequestMethod.GET)
+    public List<TransactionDto> getTransactions(@PathVariable final long id) {
+        return  transactionService.findAllForMonthBudget(id);
     }
 }

@@ -29,12 +29,11 @@ public class TransactionService {
     }
 
     public List<TransactionDto> findAllForCurrentUser() {
-        return categoryService.findAllForCurrentUser()
-                .stream()
-                .map(Category::getTransactions)
-                .flatMap(Collection::stream)
-                .map(this::convertToDto)
-                .collect(Collectors.toList());
+        return collectDtosFrom(categoryService.findAllForCurrentUser());
+    }
+
+    public List<TransactionDto> findAllForMonthBudget(long id) {
+        return collectDtosFrom(categoryService.findAllForMonthBudget(id));
     }
 
     public void create(final TransactionDto dto) {
@@ -52,6 +51,14 @@ public class TransactionService {
         category.getTransactions().add(transaction);
         transaction.setCategory(category);
         repository.create(transaction);
+    }
+
+    private List<TransactionDto> collectDtosFrom(Collection<Category> categories) {
+        return categories.stream()
+                .map(Category::getTransactions)
+                .flatMap(Collection::stream)
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
     }
 
     private Category createCategory(String name) {
