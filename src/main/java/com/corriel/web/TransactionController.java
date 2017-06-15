@@ -9,7 +9,7 @@ import javax.inject.Inject;
 import java.util.List;
 
 @RestController
-@RequestMapping("/transaction")
+@RequestMapping("/budget")
 class TransactionController {
 
     private final TransactionService transactionService;
@@ -19,12 +19,12 @@ class TransactionController {
         this.transactionService = transactionService;
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET, value = "/transactions")
     public List<TransactionDto> list() {
         return transactionService.findAllForCurrentUser();
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.POST, value = "/transactions")
     public ResponseEntity<?> insert(@RequestBody final TransactionDto transaction) {
         transactionService.create(transaction);
         return ResponseEntity.ok().build();
