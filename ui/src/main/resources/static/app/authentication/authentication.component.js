@@ -13,7 +13,7 @@ angular.
                             + credentials.password)
                     } : {};
 
-                    $http.get('user', {headers: headers}).then(function (response) {
+                    $http.get('api/user', {headers: headers}).then(function (response) {
                         $rootScope.authenticated = !!response.data.name;
                         if ($rootScope.authenticated) {
                             $location.path("/");

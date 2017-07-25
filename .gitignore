@@ -1,8 +1,11 @@
 .idea
-out
-target
-src/main/webapp/META-INF
+ui/target
+core/target
+core/src/main/webapp/
 *.iml
-src/main/webapp/resources/node_modules
+ui/src/main/resources/static/node_modules
 logs
-src/main/webapp/resources/yarn.lock
+ui/src/main/resources/static/yarn.lock
+
+### OSX ###
+.DS_Store

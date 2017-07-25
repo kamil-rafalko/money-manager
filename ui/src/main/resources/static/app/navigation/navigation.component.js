@@ -5,7 +5,7 @@ component('navigation', {
     controller: ['$rootScope', '$location', '$http',
         function NavigationController($rootScope, $location, $http) {
             this.logout = function () {
-                $http.post('logout', {}).finally(function () {
+                $http.post('api/logout', {}).finally(function () {
                     $rootScope.authenticated = false;
                     $location.path("/login");
                 })

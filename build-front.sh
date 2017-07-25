@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
-cd src/main/webapp/resources
+cd ui/src/main/resources/static
 yarn

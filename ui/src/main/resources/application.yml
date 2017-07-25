@@ -1,0 +1,7 @@
+zuul:
+  routes:
+    resource:
+      path: /api/**
+      url: http://localhost:8888
+      stripPrefix: true
+      sensitiveHeaders:
