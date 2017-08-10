@@ -1,7 +1,7 @@
 angular.
 module('transaction').
 component('transactionInsert', {
-    templateUrl: 'app/transaction/transaction-insert.template.html',
+    template: require('./transaction-insert.template.html'),
     controller: ['Transaction', '$rootScope',
         function TransactionInsertController(Transaction, $rootScope) {
             var self = this;

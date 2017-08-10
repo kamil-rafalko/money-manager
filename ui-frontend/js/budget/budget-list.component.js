@@ -1,7 +1,7 @@
 angular.
 module('budget').
 component('budgetList', {
-    templateUrl: 'app/budget/budget-list.template.html',
+    template: require('./budget-list.template.html'),
     controller: ['BudgetList', '$routeParams', '$scope',
         function BudgetListController(BudgetList, $routeParams, $scope) {
             var self = this;

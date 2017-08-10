@@ -1,7 +1,7 @@
 angular.
 module('transaction').
 component('transactionList', {
-    templateUrl: 'app/transaction/transaction-list.template.html',
+    template: require('./transaction-list.template.html'),
     controller: ['Transaction', '$routeParams', "$scope",
         function TransactionListController(Transaction, $routeParams, $scope) {
             var self = this;

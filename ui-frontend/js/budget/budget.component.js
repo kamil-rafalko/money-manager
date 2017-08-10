@@ -1,7 +1,7 @@
 angular.
     module('budget').
     component('budget', {
-        templateUrl: 'app/budget/budget.template.html',
+        template: require('./budget.template.html'),
         controller: ['$rootScope', '$scope', '$location', '$routeParams', 'Budget',
             function BudgetController($rootScope, $scope, $location, $routeParams, Budget) {
                 if (!$rootScope.authenticated) {

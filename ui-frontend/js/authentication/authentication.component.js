@@ -1,7 +1,7 @@
 angular.
     module('authentication').
     component('authentication', {
-        templateUrl: 'app/authentication/authentication.template.html',
+        template: require('./authentication.template.html'),
         scope: true,
         controller: ['$rootScope', '$http', '$location', 
             function AuthenticationController($rootScope, $http, $location) {

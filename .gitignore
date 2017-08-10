@@ -1,11 +1,10 @@
 .idea
-ui/target
-core/target
+core/target/
 core/src/main/webapp/
 *.iml
-ui/src/main/resources/static/node_modules
-logs
-ui/src/main/resources/static/yarn.lock
+node_modules/
+ui-backend/target/
+ui-backend/src/main/resources/static/js/
 
 ### OSX ###
 .DS_Store
