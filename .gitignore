@@ -5,6 +5,7 @@ core/src/main/webapp/
 node_modules/
 ui-backend/target/
 ui-backend/src/main/resources/static/js/
+core/logs
 
 ### OSX ###
 .DS_Store

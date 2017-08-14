@@ -37,7 +37,7 @@ public class BudgetControllerTest {
 
         MockMvc mockMvc = prepareMockMvcController(testDetails);
 
-        mockMvc.perform(get("/budget/details"))
+        mockMvc.perform(get("/budgets/details"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(contentType))
                 .andExpect(content().json(detailsJson));
@@ -50,9 +50,7 @@ public class BudgetControllerTest {
         MonthBudgetService monthBudgetService = mock(MonthBudgetService.class);
         when(monthBudgetService.createDetails(TEST_PART_BUDGET_ID)).thenReturn(details);
 
-        TransactionService transactionService = mock(TransactionService.class);
-
-        BudgetController controller = new BudgetController(budgetService, monthBudgetService, transactionService);
+        BudgetController controller = new BudgetController(budgetService, monthBudgetService);
         return standaloneSetup(controller).build();
     }
 
